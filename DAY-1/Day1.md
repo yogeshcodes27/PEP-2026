@@ -1,309 +1,239 @@
-# Floating-Waste Detection — Research References
+# TASK 1 — RESEARCH PAPERS & DATASET IDENTIFICATION
 
-## Base Paper
+## Title
+### Floating Waste Detection in Inland Waters — Literature Review & Dataset Reference
 
-### 1. FloW — Base Research Paper
+---
 
-**Citation**  
+## 1. FloW — Base Paper
+
+**Citation:**  
 Cheng, Y. et al. (2021). *FloW: A Dataset and Benchmark for Floating Waste Detection in Inland Waters.* IEEE/CVF ICCV 2021.  
-DOI: `10.1109/ICCV48922.2021.01077`
+**DOI:** `10.1109/ICCV48922.2021.01077`
 
-**Paper**
-- IEEE Xplore: https://ieeexplore.ieee.org/document/9710581/
-- Open PDF: https://openaccess.thecvf.com/content/ICCV2021/papers/Cheng_FloW_A_Dataset_and_Benchmark_for_Floating_Waste_Detection_in_ICCV_2021_paper.pdf
+**Paper:**  
+https://ieeexplore.ieee.org/document/9710581/
 
-**Datasets Used / Introduced**
-- FloW-Img
-- FloW-RI
-- FloW-Img: 2,000 images / 5,271 annotated floating-waste instances
+**PDF:**  
+https://openaccess.thecvf.com/content/ICCV2021/papers/Cheng_FloW_A_Dataset_and_Benchmark_for_Floating_Waste_Detection_in_ICCV_2021_paper.pdf
 
-**Taken from the Paper**
-- Base floating-waste detection problem
-- Small-object detection challenge
-- USV-based data acquisition
-- RGB detection benchmark
-- Water reflections and complex background challenges
+**Dataset:**  
+FloW-Img — 2,000 images, 5,271 annotated instances.
 
-**Official Dataset**
-- https://github.com/ORCA-Uboat/FloW-Dataset
+**Taken for our project:**  
+Base benchmark, floating-waste detection problem, small-object challenge and USV-based imagery.
+
+**Dataset:**  
+https://github.com/ORCA-Uboat/FloW-Dataset
 
 
 ---
 
-## Research Papers
+## 2. Floating Litter Detection Using Semi-Supervised Deep Learning
 
-### 2. Semi-Supervised Floating-Litter Detection
+**Citation:**  
+Jia, T. et al. (2024). *Detecting floating litter in freshwater bodies with semi-supervised deep learning.* Water Research, 266, 122405.  
+**DOI:** `10.1016/j.watres.2024.122405`
 
-**Citation**  
-Jia, T., de Vries, R., Kapelan, Z., van Emmerik, T. H. M., & Taormina, R. (2024). *Detecting floating litter in freshwater bodies with semi-supervised deep learning.* Water Research, 266, 122405.  
-DOI: `10.1016/j.watres.2024.122405`
+**Paper:**  
+https://doi.org/10.1016/j.watres.2024.122405
 
-**Paper**
-- https://doi.org/10.1016/j.watres.2024.122405
-- PDF: https://repository.tudelft.nl/file/File_6d93922b-04ad-4f00-bac8-ba3e440aacd5
+**Datasets:**  
+TUD-GV, Oostpoort, Amsterdam, Groningen, Ho Chi Minh City.
 
-**Datasets Used**
-- TUD-GV
-- Oostpoort
-- Amsterdam
-- Groningen
-- Ho Chi Minh City
-
-**Taken from the Paper**
-- Semi-supervised learning
-- Unseen-location evaluation
-- Cross-domain generalization
-- Multi-location freshwater litter detection
+**Taken for our project:**  
+Cross-location evaluation, semi-supervised learning and domain-generalization idea.
 
 
-### 3. IWHR Floating-Debris Benchmark
+---
 
-**Citation**  
+## 3. IWHR Floating-Debris Dataset
+
+**Citation:**  
 Qiao, G., Yang, M., & Wang, H. (2025). *An annotated Dataset and Benchmark for Detecting Floating Debris in Inland Waters.* Scientific Data, 12, 385.  
-DOI: `10.1038/s41597-025-04594-9`
+**DOI:** `10.1038/s41597-025-04594-9`
 
-**Paper**
-- https://doi.org/10.1038/s41597-025-04594-9
-- PDF: https://www.nature.com/articles/s41597-025-04594-9.pdf
+**Paper:**  
+https://doi.org/10.1038/s41597-025-04594-9
 
-**Dataset Used / Introduced**
-- IWHR_AI_Lable_Floater_V1
-- 3,000 images
-- 23,692 annotated floating objects
-- JPG images + XML annotations
+**Dataset:**  
+IWHR_AI_Lable_Floater_V1 — 3,000 images, 23,692 annotated objects.
 
-**Taken from the Paper**
-- Independent inland-water benchmark
-- Small-object detection challenge
-- Complex illumination/reflection conditions
-- Dataset provenance and annotation structure
+**Taken for our project:**  
+Independent external dataset and evaluation of small floating debris under different visual conditions.
 
-**Dataset**
-- https://doi.org/10.6084/m9.figshare.27376851.v1
-
-
-### 4. YOLO-Float / FloatingWaste-I
-
-**Citation**  
-Li, Y., Wang, R., Gao, D., & Liu, Z. (2023). *A Floating-Waste-Detection Method for Unmanned Surface Vehicle Based on Feature Fusion and Enhancement.* Journal of Marine Science and Engineering, 11(12), 2234.  
-DOI: `10.3390/jmse11122234`
-
-**Paper**
-- https://doi.org/10.3390/jmse11122234
-- PDF: https://www.mdpi.com/2077-1312/11/12/2234/pdf
-
-**Datasets Used**
-- FloW-Img
-- FloatingWaste-I
-
-**FloatingWaste-I**
-- 1,867 images
-- Bottles and cartons
-- Multiple lighting conditions
-
-**Taken from the Paper**
-- Feature enhancement
-- Feature fusion
-- USV floating-waste detection
-- Small-object/reflection challenges
-- FloatingWaste-I dataset
-
-**Dataset / Code**
-- https://github.com/wangruichen01/FloatingWaste-I
-
-
-### 5. WSODD — Water Surface Object Detection
-
-**Citation**  
-Zhou, Z. et al. (2021). *An Image-Based Benchmark Dataset and a Novel Object Detector for Water Surface Object Detection.* Frontiers in Neurorobotics, 15, 723336.  
-DOI: `10.3389/fnbot.2021.723336`
-
-**Paper**
-- https://doi.org/10.3389/fnbot.2021.723336
-- PDF: https://www.frontiersin.org/journals/neurorobotics/articles/10.3389/fnbot.2021.723336/pdf
-
-**Dataset Used / Introduced**
-- WSODD
-- 7,467 images
-- 21,911 instances
-- 14 categories
-- Rivers, lakes and oceans
-- Multiple weather and lighting conditions
-
-**Taken from the Paper**
-- Water-surface dataset diversity
-- Weather/lighting variation
-- Small-object analysis
-- Water-surface detection context
-
-**Dataset / Code**
-- https://github.com/sunjiaen/WSODD
-
-
-### 6. EA-DETR — Water-Surface Floating Objects
-
-**Citation**  
-Wang, J., & Liu, X. (2025). *EA-DETR: Edge-Aware Detection Transformer for Water Surface Floating Object Identification.* Neural Processing Letters, 57, 62.  
-DOI: `10.1007/s11063-025-11769-3`
-
-**Paper**
-- https://doi.org/10.1007/s11063-025-11769-3
-
-**Datasets Used**
-- FloW-Img
-- Trash-ICRA19
-
-**Taken from the Paper**
-- Edge-aware detection
-- Floating-object detection
-- Difficult water-surface backgrounds
-- Cross-dataset robustness
-
-
-### 7. Floating Plastic Monitoring with Sentinel-2
-
-**Citation**  
-Cerra, D., Auer, S., Baissero Garcia, A., & Bachofer, F. (2025). *Detection and Monitoring of Floating Plastic Debris on Inland Waters From Sentinel-2 Time Series.* IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing.  
-DOI: `10.1109/JSTARS.2024.3502796`
-
-**Paper**
-- IEEE: https://ieeexplore.ieee.org/document/10758695
-- Institutional record: https://elib.dlr.de/208902/
-
-**Dataset / Data Used**
-- Sentinel-2 optical satellite time series
-
-**Taken from the Paper**
-- Large-scale floating-plastic monitoring
-- Temporal and spectral information
-- Remote-sensing-based monitoring
-- Complementary approach to object-level RGB detection
-
-
-### 8. Autonomous Aerial Monitoring
-
-**Citation**  
-Moreno, M. et al. (2025). *Autonomous Aerial Monitoring Framework for Floating Waste Detection and Geolocation.* OCEANS 2025 – Great Lakes, IEEE.  
-DOI: `10.23919/OCEANS59106.2025.11244978`
-
-**Paper**
-- https://doi.org/10.23919/OCEANS59106.2025.11244978
-
-**Data Used**
-- Public and custom UAV data
-- UAV video
-
-**Taken from the Paper**
-- UAV-based detection
-- YOLOv8 inference
-- GPS/IMU integration
-- Geolocation
-- Real-time deployment architecture
-
-
-### 9. FLD-Net / UAV-Flow
-
-**Citation**  
-Wang, X. et al. (2026). *FLD-Net for Floating Litter Detection in UAV Remote Sensing.* Remote Sensing, 18(5), 736.  
-DOI: `10.3390/rs18050736`
-
-**Paper**
-- https://doi.org/10.3390/rs18050736
-- PDF: https://www.mdpi.com/2072-4292/18/5/736/pdf
-
-**Dataset Used / Introduced**
-- UAV-Flow
-- 4,593 high-resolution images
-- 20,618 annotated instances
-- Urban rivers
-- Natural lakes
-- Nearshore mudflats
-
-**Taken from the Paper**
-- UAV floating-litter detection
-- Small-object detection
-- Multiple water environments
-- Current UAV-specific research direction
-
-**Dataset / Code**
-- https://github.com/starandmoonw/FLD-Net
-
-
-### 10. Recent FloW Model Comparison
-
-**Citation**  
-Sumon, S. I. et al. (2026). *Floating waste detection using deep learning: a comparative study of YOLO, RT-DETR, and Faster R-CNN.* Neural Computing and Applications, 38, 293.  
-DOI: `10.1007/s00521-026-12051-w`
-
-**Paper**
-- https://doi.org/10.1007/s00521-026-12051-w
-- PDF: https://link.springer.com/content/pdf/10.1007/s00521-026-12051-w.pdf
-
-**Dataset Used**
-- FloW-Img
-- 2,000 images
-- 5,271 labeled floating-waste instances
-
-**Models Studied**
-- YOLOv8
-- YOLOv9
-- YOLOv10
-- RT-DETR
-- Faster R-CNN
-- Ensemble methods
-
-**Taken from the Paper**
-- Current FloW benchmark context
-- Existing YOLO/RT-DETR/Faster R-CNN comparisons
-- Existing ensemble-based approaches
-- Evidence that a simple “compare YOLO models on FloW” study is already well explored
+**Dataset:**  
+https://doi.org/10.6084/m9.figshare.27376851.v1
 
 
 ---
 
-# Dataset References
+## 4. Floating-Waste Detection Using Feature Fusion
 
-| Dataset | Official / Primary Link | Verified Data |
-|---|---|---|
-| **FloW-Img** | https://github.com/ORCA-Uboat/FloW-Dataset | 2,000 images / 5,271 instances |
-| **TUD-GV OD** | https://doi.org/10.5281/zenodo.13730228 | 1,501 images / 8,181 boxes |
-| **Oostpoort** | https://doi.org/10.5281/zenodo.13730298 | 562 images / 1,014 boxes |
-| **Groningen** | https://doi.org/10.5281/zenodo.13730384 | 63 images / 383 boxes |
-| **IWHR** | https://doi.org/10.6084/m9.figshare.27376851.v1 | 3,000 images / 23,692 objects |
-| **FloatingWaste-I** | https://github.com/wangruichen01/FloatingWaste-I | 1,867 images |
-| **WSODD** | https://github.com/sunjiaen/WSODD | 7,467 images / 21,911 instances |
-| **UAV-Flow** | https://github.com/starandmoonw/FLD-Net | 4,593 images / 20,618 instances |
+**Citation:**  
+Li, Y. et al. (2023). *A Floating-Waste-Detection Method for Unmanned Surface Vehicle Based on Feature Fusion and Enhancement.* Journal of Marine Science and Engineering.  
+**DOI:** `10.3390/jmse11122234`
+
+**Paper:**  
+https://doi.org/10.3390/jmse11122234
+
+**Datasets:**  
+FloW-Img, FloatingWaste-I.
+
+**Taken for our project:**  
+Floating-waste detection methods, feature enhancement and additional USV floating-waste data.
+
 
 ---
 
-## Reference Flow
+## 5. Water Surface Object Detection
 
-**FloW (2021)**  
-→ Base benchmark and floating-waste detection problem
+**Citation:**  
+Zhou, Z. et al. (2021). *An Image-Based Benchmark Dataset and a Novel Object Detector for Water Surface Object Detection.* Frontiers in Neurorobotics.  
+**DOI:** `10.3389/fnbot.2021.723336`
 
-**Jia et al. (2024)**  
-→ Semi-supervised learning and cross-location generalization
+**Paper:**  
+https://doi.org/10.3389/fnbot.2021.723336
 
-**Qiao et al. (2025)**  
-→ Independent inland-water floating-debris benchmark
+**Dataset:**  
+WSODD — 7,467 images, 21,911 instances.
 
-**YOLO-Float (2023)**  
-→ USV floating-waste detection and feature enhancement
+**Taken for our project:**  
+Water-surface conditions, environmental variation and small-object detection context.
 
-**WSODD (2021)**  
-→ Diverse water-surface conditions
 
-**EA-DETR (2025)**  
-→ Edge-aware and cross-dataset detection
+---
 
-**Sentinel-2 (2025)**  
-→ Large-scale remote-sensing monitoring
+## 6. EA-DETR
 
-**OCEANS 2025**  
-→ UAV deployment and geolocation
+**Citation:**  
+Wang, J. & Liu, X. (2025). *EA-DETR: Edge-Aware Detection Transformer for Water Surface Floating Object Identification.* Neural Processing Letters.  
+**DOI:** `10.1007/s11063-025-11769-3`
 
-**FLD-Net (2026)**  
-→ UAV-specific floating-litter detection
+**Paper:**  
+https://doi.org/10.1007/s11063-025-11769-3
 
-**FloW comparison (2026)**  
-→ Existing detector-comparison landscape
+**Datasets:**  
+FloW-Img, Trash-ICRA19.
+
+**Taken for our project:**  
+Floating-object detection and cross-dataset robustness.
+
+
+---
+
+## 7. Floating Plastic Detection Using Sentinel-2
+
+**Citation:**  
+Cerra, D. et al. (2025). *Detection and Monitoring of Floating Plastic Debris on Inland Waters From Sentinel-2 Time Series.* IEEE JSTARS.  
+**DOI:** `10.1109/JSTARS.2024.3502796`
+
+**Paper:**  
+https://ieeexplore.ieee.org/document/10758695
+
+**Data:**  
+Sentinel-2 satellite imagery.
+
+**Taken for our project:**  
+Large-scale floating-plastic monitoring as a related remote-sensing approach.
+
+
+---
+
+## 8. Autonomous Aerial Monitoring
+
+**Citation:**  
+Moreno, M. et al. (2025). *Autonomous Aerial Monitoring Framework for Floating Waste Detection and Geolocation.* IEEE OCEANS 2025.  
+**DOI:** `10.23919/OCEANS59106.2025.11244978`
+
+**Paper:**  
+https://doi.org/10.23919/OCEANS59106.2025.11244978
+
+**Data:**  
+Public + custom UAV data.
+
+**Taken for our project:**  
+UAV deployment, YOLO-based detection and geolocation concept.
+
+
+---
+
+## 9. FLD-Net / UAV-Flow
+
+**Citation:**  
+Wang, X. et al. (2026). *FLD-Net for Floating Litter Detection in UAV Remote Sensing.* Remote Sensing.  
+**DOI:** `10.3390/rs18050736`
+
+**Paper:**  
+https://doi.org/10.3390/rs18050736
+
+**Dataset:**  
+UAV-Flow — 4,593 images, 20,618 annotated instances.
+
+**Taken for our project:**  
+Recent UAV-based floating-litter research and small-object detection.
+
+**Dataset / Code:**  
+https://github.com/starandmoonw/FLD-Net
+
+
+---
+
+## 10. Recent FloW Model Comparison
+
+**Citation:**  
+Sumon, S. I. et al. (2026). *Floating waste detection using deep learning: a comparative study of YOLO, RT-DETR, and Faster R-CNN.* Neural Computing and Applications.  
+**DOI:** `10.1007/s00521-026-12051-w`
+
+**Paper:**  
+https://doi.org/10.1007/s00521-026-12051-w
+
+**Dataset:**  
+FloW-Img.
+
+**Taken for our project:**  
+Current FloW research landscape and existing YOLO/RT-DETR/Faster R-CNN comparisons.
+
+
+---
+
+# DATA WE WILL USE
+
+### Primary Dataset
+**FloW-Img**  
+2,000 images / 5,271 instances  
+https://github.com/ORCA-Uboat/FloW-Dataset
+
+### External Validation Dataset
+**TUD-GV Object Detection**  
+1,501 images / 8,181 boxes  
+https://doi.org/10.5281/zenodo.13730228
+
+### Second External Validation Dataset
+**IWHR**  
+3,000 images / 23,692 objects  
+https://doi.org/10.6084/m9.figshare.27376851.v1
+
+### Optional
+**Oostpoort** — 562 / 1,014  
+https://doi.org/10.5281/zenodo.13730298
+
+**Groningen** — 63 / 383  
+https://doi.org/10.5281/zenodo.13730384
+
+
+---
+
+# DATA TO DOWNLOAD
+
+**1. TUD-GV OD**  
+https://doi.org/10.5281/zenodo.13730228
+
+**2. IWHR**  
+https://doi.org/10.6084/m9.figshare.27376851.v1
+
+**3. FloW-Img**  
+https://github.com/ORCA-Uboat/FloW-Dataset  
+→ Official access/request required.
+
+**Do not download Oostpoort and Groningen yet.**
