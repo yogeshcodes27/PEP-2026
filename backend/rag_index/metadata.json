@@ -1,0 +1,37 @@
+{
+  "embedding_model": "all-MiniLM-L6-v2",
+  "dimension": 384,
+  "metric": "cosine_similarity_via_normalized_inner_product",
+  "chunks": [
+    {
+      "chunk_id": "datasets_0000",
+      "source": "datasets.md",
+      "section": "General",
+      "text": "﻿# RobustFloat — Dataset Information\n\nTUD-GV:\n- 1,501 images\n- 8,181 annotated bounding boxes\n- original class: litter\n\nIWHR:\n- 3,000 images\n- 23,689 cleaned bounding boxes\n- original class: floater\n\nBoth datasets are mapped to the application class:\nfloating_waste\n\nThe datasets use group-aware splitting procedures to reduce leakage between training, validation and test data.\n\nThe unified training setup uses domain balancing by oversampling TUD-GV training images to match IWHR training exposure.\n\nDataset provenance, licenses and original source citations should be documented separately before public release."
+    },
+    {
+      "chunk_id": "evaluation_0001",
+      "source": "evaluation.md",
+      "section": "General",
+      "text": "﻿# RobustFloat — Evaluation\n\nThe final YOLO26s-P2 Unified model was evaluated on held-out TUD-GV and IWHR test sets.\n\nTUD-GV test:\n- 256 images\n- 1,506 instances\n- Precision: 97.32%\n- Recall: 90.37%\n- F1: 93.72%\n- mAP@50: 93.60%\n- mAP@50-95: 71.99%\n- Confidence threshold: 0.25\n\nIWHR test:\n- 450 images\n- 3,660 instances\n- Precision: 86.61%\n- Recall: 68.76%\n- F1: 76.66%\n- mAP@50: 73.48%\n- mAP@50-95: 51.78%\n- Confidence threshold: 0.25\n\nThe compute-matched YOLO26s-P2 TUD-only model achieved:\n- TUD-GV F1: 94.23%\n- IWHR F1: 20.92%\n\nThis demonstrates substantial domain shift between the evaluated datasets.\n\nPerformance on a completely unseen third water-domain dataset has not been established."
+    },
+    {
+      "chunk_id": "limitations_0002",
+      "source": "limitations.md",
+      "section": "General",
+      "text": "﻿# RobustFloat — Limitations\n\nThe number of detected objects is not necessarily the exact physical number of waste objects present in an environment.\n\nDetector confidence scores should not be interpreted directly as calibrated probabilities of correctness.\n\nZero detections do not imply that the water is clean.\n\nThe current study evaluates TUD-GV and IWHR but does not establish performance on a completely unseen third water-domain dataset.\n\nDomain shift can reduce detector performance when the visual distribution differs from the evaluated datasets.\n\nThe application should not infer pollution percentages, ecological health, public-health risk, locations or trends unless those facts are explicitly available in the data.\n\nUser corrections are feedback records and should not automatically trigger model retraining."
+    },
+    {
+      "chunk_id": "methodology_0003",
+      "source": "methodology.md",
+      "section": "General",
+      "text": "﻿# RobustFloat — Methodology\n\nThe application combines computer vision, structured storage, vector retrieval and an LLM.\n\nYOLO26s-P2 Unified performs object detection on uploaded images.\n\nDuckDB stores structured information including image metadata, inference runs, detections, benchmark metrics and human feedback.\n\nThe RAG layer stores narrative project knowledge as vector embeddings.\n\nSentenceTransformers is used to create embeddings.\n\nFAISS is used as the local vector index for semantic retrieval.\n\nThe LLM receives exact structured facts from DuckDB together with relevant narrative context retrieved from FAISS.\n\nExact numerical benchmark metrics should come from DuckDB rather than being inferred from semantic retrieval.\n\nThe application should not invent numerical values or unsupported claims."
+    },
+    {
+      "chunk_id": "model_overview_0004",
+      "source": "model_overview.md",
+      "section": "General",
+      "text": "﻿# RobustFloat — Model Overview\n\nRobustFloat is a floating-waste detection system for inland-water imagery.\n\nThe current primary model is YOLO26s-P2 Unified.\n\nThe model uses one application class:\nfloating_waste\n\nArchitecture:\n- 329 layers\n- 9,765,856 parameters\n- 28.0 GFLOPs\n- P2 / P3 / P4 / P5 detection scales\n\nThe model was trained jointly on TUD-GV and IWHR.\n\nThe application should describe detections as model detections at a selected confidence threshold, not as exact physical counts of all waste present."
+    }
+  ]
+}

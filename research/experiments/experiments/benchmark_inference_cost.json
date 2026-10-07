@@ -1,0 +1,59 @@
+{
+  "device": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+  "test_images": 256,
+  "settings": {
+    "baseline_conf": 0.4,
+    "highres_conf": 0.5,
+    "tiled_conf": 0.85,
+    "tiled_tile_size": 640,
+    "tiled_overlap": 0.2,
+    "coarse_conf": 0.25,
+    "fine_conf": 0.75,
+    "fine_crop": [
+      960,
+      540
+    ]
+  },
+  "results": [
+    {
+      "method": "Baseline 640",
+      "images": 256,
+      "total_time_seconds": 2.3818,
+      "average_latency_ms": 9.297,
+      "median_latency_ms": 9.159,
+      "p95_latency_ms": 10.247,
+      "throughput_fps": 107.482,
+      "average_model_calls_per_image": 1.0
+    },
+    {
+      "method": "High-Res 960",
+      "images": 256,
+      "total_time_seconds": 4.2856,
+      "average_latency_ms": 16.734,
+      "median_latency_ms": 16.534,
+      "p95_latency_ms": 17.764,
+      "throughput_fps": 59.735,
+      "average_model_calls_per_image": 1.0
+    },
+    {
+      "method": "Tiled 640",
+      "images": 256,
+      "total_time_seconds": 25.7447,
+      "average_latency_ms": 100.558,
+      "median_latency_ms": 100.587,
+      "p95_latency_ms": 104.015,
+      "throughput_fps": 9.944,
+      "average_model_calls_per_image": 8.0
+    },
+    {
+      "method": "Coarse-to-Fine",
+      "images": 256,
+      "total_time_seconds": 28.456,
+      "average_latency_ms": 111.149,
+      "median_latency_ms": 105.166,
+      "p95_latency_ms": 199.767,
+      "throughput_fps": 8.996,
+      "average_model_calls_per_image": 7.34
+    }
+  ]
+}

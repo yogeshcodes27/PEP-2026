@@ -1,0 +1,6 @@
+path: C:/PEP_2026/iwhr_adaptation
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: floating_waste

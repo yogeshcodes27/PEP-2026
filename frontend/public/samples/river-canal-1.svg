@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <!-- Monochrome water gradient representing inland river canal -->
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c0f12" />
+      <stop offset="40%" stop-color="#14171a" />
+      <stop offset="70%" stop-color="#181c20" />
+      <stop offset="100%" stop-color="#0e1114" />
+    </linearGradient>
+
+    <!-- Water current turbulence filter -->
+    <filter id="waterTurbulence" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015 0.04" numOctaves="3" result="noise" />
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.18 0" />
+      <feComposite in2="SourceGraphic" in="glare" operator="in" />
+    </filter>
+
+    <!-- Embankment linear gradient -->
+    <linearGradient id="embankmentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#070707" />
+      <stop offset="15%" stop-color="#1a1a1a" />
+      <stop offset="90%" stop-color="#111111" />
+      <stop offset="100%" stop-color="#050505" />
+    </linearGradient>
+
+    <!-- Subtle water ripple pattern -->
+    <pattern id="ripples" width="160" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 0,20 Q 40,35 80,20 T 160,20" fill="none" stroke="#ffffff" stroke-width="0.75" stroke-opacity="0.07" />
+      <path d="M 0,55 Q 40,70 80,55 T 160,55" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.05" />
+      <path d="M 20,40 Q 60,25 100,40 T 180,40" fill="none" stroke="#ffffff" stroke-width="0.6" stroke-opacity="0.04" />
+    </pattern>
+
+    <!-- Floating debris texture -->
+    <radialGradient id="debrisGrad1" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#e5e5e5" />
+      <stop offset="40%" stop-color="#999999" />
+      <stop offset="100%" stop-color="#333333" />
+    </radialGradient>
+    <radialGradient id="debrisGrad2" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#cccccc" />
+      <stop offset="60%" stop-color="#666666" />
+      <stop offset="100%" stop-color="#222222" />
+    </radialGradient>
+  </defs>
+
+  <!-- Water Surface Base -->
+  <rect width="1200" height="800" fill="url(#waterGrad)" />
+  <rect width="1200" height="800" fill="url(#ripples)" />
+
+  <!-- Hydraulic Current Vector Lines -->
+  <g opacity="0.12" stroke="#ffffff" stroke-width="1" stroke-dasharray="8 12">
+    <path d="M -50,150 C 300,180 700,120 1250,220" fill="none" />
+    <path d="M -50,320 C 350,340 850,290 1250,380" fill="none" />
+    <path d="M -50,510 C 250,560 750,490 1250,540" fill="none" />
+    <path d="M -50,680 C 400,720 800,660 1250,710" fill="none" />
+  </g>
+
+  <!-- Left Embankment / Pier Wall (Urban Waterway Infrastructure) -->
+  <path d="M 0,0 L 140,0 L 90,800 L 0,800 Z" fill="url(#embankmentGrad)" opacity="0.9" />
+  <line x1="140" y1="0" x2="90" y2="800" stroke="#333333" stroke-width="2" />
+  <line x1="142" y1="0" x2="92" y2="800" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.3" />
+
+  <!-- Floating Debris Cluster 1 (Target for Det 01: 32%, 44% -> x=384, y=352) -->
+  <g transform="translate(390, 350)">
+    <!-- Natural organic / synthetic waste clump -->
+    <ellipse cx="25" cy="20" rx="36" ry="24" fill="#1b1e22" opacity="0.7" />
+    <path d="M 10,8 Q 32,-4 54,12 Q 62,35 44,45 Q 15,48 5,30 Z" fill="url(#debrisGrad1)" />
+    <!-- Entangled bottle / wrapper silhouette -->
+    <rect x="18" y="14" width="28" height="12" rx="4" transform="rotate(24 32 20)" fill="#f0f0f0" opacity="0.85" />
+    <path d="M 38,10 L 46,6 L 48,10 Z" fill="#999999" />
+    <circle cx="16" cy="28" r="6" fill="#cccccc" opacity="0.9" />
+    <!-- Secondary small fragment -->
+    <ellipse cx="-15" cy="8" rx="10" ry="7" fill="url(#debrisGrad2)" />
+  </g>
+
+  <!-- Floating Debris Cluster 2 (Target for Det 02: 58%, 62% -> x=696, y=496) -->
+  <g transform="translate(700, 490)">
+    <ellipse cx="20" cy="18" rx="30" ry="18" fill="#181b1f" opacity="0.6" />
+    <path d="M 5,12 Q 22,0 48,8 Q 55,28 35,36 Q 12,38 2,22 Z" fill="url(#debrisGrad2)" />
+    <polygon points="12,14 36,10 42,22 18,26" fill="#ffffff" opacity="0.8" />
+    <circle cx="44" cy="26" r="4" fill="#a0a0a0" />
+  </g>
+
+  <!-- Floating Debris Cluster 3 (Target for Det 03: 74%, 38% -> x=888, y=304) -->
+  <g transform="translate(890, 305)">
+    <ellipse cx="14" cy="12" rx="22" ry="14" fill="#181a1d" opacity="0.5" />
+    <path d="M 4,8 Q 18,-2 34,6 Q 38,20 24,24 Q 8,24 2,14 Z" fill="url(#debrisGrad1)" />
+    <rect x="10" y="8" width="16" height="8" rx="2" transform="rotate(-15 18 12)" fill="#ffffff" opacity="0.85" />
+  </g>
+
+  <!-- Floating Debris Cluster 4 (Target for Det 04: 18%, 71% -> x=216, y=568) -->
+  <g transform="translate(220, 565)">
+    <ellipse cx="28" cy="22" rx="42" ry="26" fill="#16191c" opacity="0.7" />
+    <path d="M 8,14 Q 35,-2 58,16 Q 66,42 42,50 Q 14,50 4,32 Z" fill="url(#debrisGrad2)" />
+    <rect x="22" y="16" width="30" height="15" rx="3" transform="rotate(35 37 23)" fill="#e0e0e0" opacity="0.75" />
+    <circle cx="15" cy="35" r="7" fill="#888888" />
+  </g>
+
+  <!-- Technical Telemetry & Drone Overlay Reticle Grid -->
+  <g opacity="0.25">
+    <circle cx="600" cy="400" r="160" fill="none" stroke="#ffffff" stroke-width="0.75" stroke-dasharray="4 8" />
+    <circle cx="600" cy="400" r="3" fill="#ffffff" />
+    <line x1="560" y1="400" x2="590" y2="400" stroke="#ffffff" stroke-width="1" />
+    <line x1="610" y1="400" x2="640" y2="400" stroke="#ffffff" stroke-width="1" />
+    <line x1="600" y1="360" x2="600" y2="390" stroke="#ffffff" stroke-width="1" />
+    <line x1="600" y1="410" x2="600" y2="440" stroke="#ffffff" stroke-width="1" />
+    <!-- Corner brackets -->
+    <path d="M 40,60 L 40,40 L 60,40" fill="none" stroke="#ffffff" stroke-width="1.5" />
+    <path d="M 1160,60 L 1160,40 L 1140,40" fill="none" stroke="#ffffff" stroke-width="1.5" />
+    <path d="M 40,740 L 40,760 L 60,760" fill="none" stroke="#ffffff" stroke-width="1.5" />
+    <path d="M 1160,740 L 1160,760 L 1140,760" fill="none" stroke="#ffffff" stroke-width="1.5" />
+  </g>
+
+  <!-- Technical Metadata Monospace Text in SVG -->
+  <text x="50" y="70" fill="#ffffff" opacity="0.4" font-family="monospace" font-size="11">DOMAIN: TUD-GV // SECTOR: URBAN CANAL 4B // SENSOR: RGB-UAV 4K // TURBIDITY: 38 NTU</text>
+  <text x="1150" y="70" fill="#ffffff" opacity="0.4" font-family="monospace" font-size="11" text-anchor="end">LAT: 52.0116° N // LON: 4.3571° E // ALT: 28.4M</text>
+</svg>

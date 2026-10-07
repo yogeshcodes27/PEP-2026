@@ -1,0 +1,108 @@
+{
+  "exp11_102.jpg": {
+    "image_width": 1920,
+    "image_height": 1080,
+    "tile_count": 8,
+    "raw_detections": 9,
+    "after_edge_cleanup": 7,
+    "final_detections": 4,
+    "predictions": [
+      {
+        "box": [
+          159.39739990234375,
+          403.66912841796875,
+          294.5852355957031,
+          561.9581298828125
+        ],
+        "score": 0.9210163950920105,
+        "class_id": 0,
+        "tile_index": 0,
+        "tile": [
+          0,
+          0,
+          640,
+          640
+        ],
+        "edge": {
+          "left": false,
+          "right": false,
+          "top": false,
+          "bottom": false,
+          "any": false
+        }
+      },
+      {
+        "box": [
+          1355.9808349609375,
+          992.100830078125,
+          1377.973388671875,
+          1008.84423828125
+        ],
+        "score": 0.7024943828582764,
+        "class_id": 0,
+        "tile_index": 7,
+        "tile": [
+          1280,
+          440,
+          1920,
+          1080
+        ],
+        "edge": {
+          "left": false,
+          "right": false,
+          "top": false,
+          "bottom": false,
+          "any": false
+        }
+      },
+      {
+        "box": [
+          1678.4827880859375,
+          908.7650146484375,
+          1712.8466796875,
+          929.661376953125
+        ],
+        "score": 0.6769053936004639,
+        "class_id": 0,
+        "tile_index": 7,
+        "tile": [
+          1280,
+          440,
+          1920,
+          1080
+        ],
+        "edge": {
+          "left": false,
+          "right": false,
+          "top": false,
+          "bottom": false,
+          "any": false
+        }
+      },
+      {
+        "box": [
+          1185.756591796875,
+          80.5566177368164,
+          1316.0848388671875,
+          179.34616088867188
+        ],
+        "score": 0.4331502616405487,
+        "class_id": 0,
+        "tile_index": 2,
+        "tile": [
+          1024,
+          0,
+          1664,
+          640
+        ],
+        "edge": {
+          "left": false,
+          "right": false,
+          "top": false,
+          "bottom": false,
+          "any": false
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+﻿path: C:/PEP_2026
+train: C:/PEP_2026/unified_dataset/tud_only_4200.txt
+val: C:/PEP_2026/dataset/images/val
+test: C:/PEP_2026/dataset/images/test
+names:
+  0: floating_waste

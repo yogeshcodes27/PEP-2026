@@ -1,0 +1,131 @@
+{
+  "defaultAnswers": [
+    {
+      "pattern": "mean",
+      "answer": "This result identifies bounding box locations where the optical model detected visible floating-waste objects above confidence threshold 0.25. It reflects visible surface objects captured in this photograph. It does not measure chemical water quality, pathogens, or drinking-water safety.",
+      "evidence": {
+        "facts": {
+          "detectionType": "Visible surface bounding boxes",
+          "activeThreshold": 0.25,
+          "visibleDetections": "{count}",
+          "waterQualityScope": "Not measured optically"
+        },
+        "sources": [
+          { "name": "Technical Scope & Boundaries §1.2", "chunkId": "scope-sec-1" }
+        ]
+      }
+    },
+    {
+      "pattern": "what was detected",
+      "answer": "The model detected {count} visible floating-waste candidates in this image at confidence ≥ 0.25. Detections were predicted using the unified YOLO26s-P2 detector for the single class 'floating_waste'. Inspect individual boxes on the photo to review candidate locations.",
+      "evidence": {
+        "facts": {
+          "targetClass": "floating_waste",
+          "visibleDetections": "{count}",
+          "modelVersion": "{modelVersion}",
+          "suggestedAction": "Inspect boxes on canvas"
+        },
+        "sources": [
+          { "name": "Detector Class Specification §1.1", "chunkId": "class-spec-01" },
+          { "name": "Run Inference Output", "chunkId": "run-inference-meta" }
+        ]
+      }
+    },
+    {
+      "pattern": "pollution",
+      "answer": "Visible floating debris indicates surface plastic or municipal waste accumulation at this photographed location, but optical detection alone cannot measure chemical contamination, dissolved toxins, or overall water safety. Physical sampling and laboratory testing are required for water quality assessment.",
+      "evidence": {
+        "facts": {
+          "debrisType": "Surface floating waste only",
+          "chemicalAssessment": "Not supported by optical CV",
+          "safetyStatus": "Requires laboratory water testing"
+        },
+        "sources": [
+          { "name": "Environmental Monitoring Boundaries §4.1", "chunkId": "env-proto-04" }
+        ]
+      }
+    },
+    {
+      "pattern": "look at next",
+      "answer": "Review each bounding box on the image to verify detections against possible water surface reflections, wave crests, or vegetation. You can also adjust the confidence threshold slider to inspect higher or lower confidence candidate boxes.",
+      "evidence": {
+        "facts": {
+          "step1": "Review bounding boxes on photo canvas",
+          "step2": "Adjust confidence threshold slider",
+          "step3": "Assess environmental scene conditions"
+        },
+        "sources": [
+          { "name": "RobustFloat Workspace User Guide §2.0", "chunkId": "guide-sec-02" }
+        ]
+      }
+    },
+    {
+      "pattern": "how many",
+      "answer": "At the active confidence threshold of 0.25, the model detected {count} visible floating-waste objects in this image. Detections were made using the YOLO26s-P2 unified detector.",
+      "evidence": {
+        "facts": {
+          "runId": "{runId}",
+          "threshold": 0.25,
+          "detectionCount": "{count}",
+          "modelVersion": "{modelVersion}"
+        },
+        "sources": [
+          { "name": "Run Inference Output", "chunkId": "run-inference-meta" }
+        ]
+      }
+    },
+    {
+      "pattern": "reliable",
+      "answer": "Reliability depends on the water condition and confidence threshold. On the TUD-GV and IWHR evaluation sets, detections in the 0.75–1.00 band achieved 88–97% precision, while detections below 0.25 had precision under 45%. This image is categorized as '{imageCheck}' to evaluation benchmarks.",
+      "evidence": {
+        "facts": {
+          "imageCheck": "{imageCheck}",
+          "evaluationPrecisionRange": "88% - 97% for high scores, 31% - 44% for scores <0.25",
+          "evaluationDatasets": "TUD-GV, IWHR"
+        },
+        "sources": [
+          { "name": "Held-Out Test Set Precision Table", "chunkId": "eval-table-sec-2" },
+          { "name": "Domain Distribution Classifier", "chunkId": "image-check-meta" }
+        ]
+      }
+    },
+    {
+      "pattern": "uncertain",
+      "answer": "Results may be uncertain due to domain shift: differences in water turbidity, sun reflection glare, waves, or camera distance that differ from the two training datasets. In addition, raw confidence scores are uncalibrated and should not be interpreted as exact probabilities.",
+      "evidence": {
+        "facts": {
+          "domainShiftRisk": "Optical and turbidity variance",
+          "knownFalsePositives": "Wave crest reflections, sun glints, floating organic foam"
+        },
+        "sources": [
+          { "name": "RobustFloat Technical Limitations", "chunkId": "limitations-sec-3" }
+        ]
+      }
+    },
+    {
+      "pattern": "not tell me",
+      "answer": "The model has only one class ('floating waste'). It does not identify material types (such as whether an item is PET plastic, glass, or aluminum), does not compute pollution severity scores, cannot estimate submerged depth, and does not establish safety risks.",
+      "evidence": {
+        "facts": {
+          "classesCount": 1,
+          "targetClass": "floating_waste",
+          "materialClassificationStatus": "Auxiliary experimental only, disabled by default"
+        },
+        "sources": [
+          { "name": "Detector Class Specification §1.1", "chunkId": "class-spec-01" }
+        ]
+      }
+    }
+  ],
+  "refusal": {
+    "answer": "This model cannot answer that question from the available detection facts. The detector only provides bounding coordinates and confidence scores for single-class floating waste.",
+    "refusal": true,
+    "evidence": {
+      "facts": {
+        "queryStatus": "Out of scope",
+        "availableData": "Bounding boxes and confidence scores only"
+      },
+      "sources": []
+    }
+  }
+}

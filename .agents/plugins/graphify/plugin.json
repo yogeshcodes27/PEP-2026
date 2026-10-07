@@ -1,0 +1,4 @@
+{
+  "name": "graphify",
+  "description": "Deterministic AST and multimodal knowledge graph generator for codebase navigation, architecture review, and query/path/explain exploration."
+}

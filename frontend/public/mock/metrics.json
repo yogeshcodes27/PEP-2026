@@ -1,0 +1,24 @@
+[
+  {
+    "model": "YOLO26s-P2 Unified",
+    "dataset": "TUD-GV",
+    "threshold": 0.25,
+    "precision": 97.32,
+    "recall": 90.37,
+    "f1": 93.72,
+    "map50": 93.60,
+    "map50_95": 71.99,
+    "note": "Evaluated on 1,501 held-out river and canal surface images from TUD-GV benchmark."
+  },
+  {
+    "model": "YOLO26s-P2 Unified",
+    "dataset": "IWHR",
+    "threshold": 0.25,
+    "precision": 86.61,
+    "recall": 68.76,
+    "f1": 76.66,
+    "map50": 73.48,
+    "map50_95": 51.78,
+    "note": "Evaluated on 3,000 held-out inland hydrographic reservoir images from IWHR benchmark."
+  }
+]

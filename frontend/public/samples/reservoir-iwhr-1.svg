@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <!-- IWHR Inland reservoir water gradient with high turbidity and silt -->
+    <linearGradient id="reservoirGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141712" />
+      <stop offset="35%" stop-color="#1c1f19" />
+      <stop offset="70%" stop-color="#151813" />
+      <stop offset="100%" stop-color="#0e100c" />
+    </linearGradient>
+
+    <!-- Sun specular glare / optical flare representation -->
+    <radialGradient id="sunGlareGrad" cx="75%" cy="25%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32" />
+      <stop offset="25%" stop-color="#ffffff" stop-opacity="0.12" />
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0.03" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0" />
+    </radialGradient>
+
+    <!-- Choppy hydraulic reservoir surface wave pattern -->
+    <pattern id="choppyWaves" width="120" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 0,15 Q 30,5 60,15 T 120,15" fill="none" stroke="#ffffff" stroke-width="0.7" stroke-opacity="0.08" />
+      <path d="M 10,40 Q 40,30 70,40 T 130,40" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.06" />
+    </pattern>
+
+    <!-- Macro debris and floater cluster gradient -->
+    <radialGradient id="floaterGrad1" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#f5f5f5" />
+      <stop offset="50%" stop-color="#888888" />
+      <stop offset="100%" stop-color="#282828" />
+    </radialGradient>
+  </defs>
+
+  <!-- Reservoir Water Surface -->
+  <rect width="1200" height="800" fill="url(#reservoirGrad)" />
+  <rect width="1200" height="800" fill="url(#choppyWaves)" />
+  <rect width="1200" height="800" fill="url(#sunGlareGrad)" />
+
+  <!-- Hydraulic Retention Boom Chain (Inland Hydro Dam infrastructure) -->
+  <g stroke="#ffffff" stroke-opacity="0.2" stroke-width="1.5">
+    <path d="M 0,220 Q 550,290 1200,240" fill="none" stroke-dasharray="16 10" />
+    <!-- Floating cylindrical orange/grey boom markers (represented in monochrome) -->
+    <rect x="180" y="235" width="22" height="10" rx="3" fill="#666666" />
+    <rect x="380" y="258" width="22" height="10" rx="3" fill="#666666" />
+    <rect x="580" y="272" width="22" height="10" rx="3" fill="#888888" />
+    <rect x="780" y="267" width="22" height="10" rx="3" fill="#666666" />
+    <rect x="980" y="251" width="22" height="10" rx="3" fill="#555555" />
+  </g>
+
+  <!-- Floating Debris Cluster 1 (Target for Det 11: 42%, 35% -> x=504, y=280) -->
+  <g transform="translate(504, 280)">
+    <ellipse cx="30" cy="22" rx="45" ry="28" fill="#181917" opacity="0.8" />
+    <!-- Entangled floating vegetation and plastic container cluster -->
+    <path d="M 12,10 Q 45,-6 70,18 Q 80,48 50,56 Q 16,56 6,34 Z" fill="url(#floaterGrad1)" />
+    <rect x="25" y="16" width="34" height="16" rx="4" transform="rotate(-18 42 24)" fill="#ffffff" opacity="0.8" />
+    <circle cx="58" cy="38" r="9" fill="#d0d0d0" />
+    <path d="M 2,18 Q 12,6 24,12" stroke="#222" stroke-width="3" fill="none" />
+  </g>
+
+  <!-- Floating Debris Cluster 2 (Target for Det 12: 65%, 48% -> x=780, y=384) -->
+  <g transform="translate(780, 384)">
+    <ellipse cx="22" cy="18" rx="32" ry="20" fill="#151714" opacity="0.7" />
+    <path d="M 8,8 Q 30,-2 50,12 Q 56,32 36,40 Q 12,42 4,24 Z" fill="url(#floaterGrad1)" />
+    <rect x="16" y="12" width="24" height="12" rx="3" transform="rotate(28 28 18)" fill="#efefef" opacity="0.85" />
+  </g>
+
+  <!-- Floating Debris Cluster 3 (Target for Det 13: 22%, 58% -> x=264, y=464) -->
+  <g transform="translate(264, 464)">
+    <ellipse cx="26" cy="20" rx="38" ry="24" fill="#141613" opacity="0.75" />
+    <path d="M 6,12 Q 28,-4 52,14 Q 60,38 38,46 Q 12,46 4,28 Z" fill="url(#floaterGrad1)" />
+    <polygon points="18,12 44,16 38,34 14,28" fill="#c0c0c0" opacity="0.7" />
+  </g>
+
+  <!-- Technical Overlay Grid & Coordinate Tick Marks -->
+  <g opacity="0.2">
+    <circle cx="600" cy="400" r="280" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="2 12" />
+    <circle cx="600" cy="400" r="2" fill="#ffffff" />
+    <line x1="0" y1="400" x2="1200" y2="400" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="2 8" />
+    <line x1="600" y1="0" x2="600" y2="800" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="2 8" />
+    <!-- Ticks -->
+    <line x1="300" y1="395" x2="300" y2="405" stroke="#ffffff" stroke-width="1" />
+    <line x1="900" y1="395" x2="900" y2="405" stroke="#ffffff" stroke-width="1" />
+    <line x1="595" y1="200" x2="605" y2="200" stroke="#ffffff" stroke-width="1" />
+    <line x1="595" y1="600" x2="605" y2="600" stroke="#ffffff" stroke-width="1" />
+  </g>
+
+  <text x="50" y="70" fill="#ffffff" opacity="0.4" font-family="monospace" font-size="11">DOMAIN: IWHR // SECTOR: RESERVOIR INLET BOOM 09 // SENSOR: FIXED PTZ 1080P // TURBIDITY: 62 NTU</text>
+  <text x="1150" y="70" fill="#ffffff" opacity="0.4" font-family="monospace" font-size="11" text-anchor="end">OPTICAL CHALLENGE: SUN GLARE + SILT CLUTTER // FRAME: #09244</text>
+</svg>

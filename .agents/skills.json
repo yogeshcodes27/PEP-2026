@@ -1,0 +1,8 @@
+{
+  "entries": [
+    { "path": ".agents/plugins/ponytail/skills" },
+    { "path": ".agents/plugins/get-shit-done/skills" },
+    { "path": ".agents/plugins/coderabbit/skills" },
+    { "path": ".agents/plugins/graphify/skills" }
+  ]
+}

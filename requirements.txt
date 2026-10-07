@@ -1,0 +1,21 @@
+# Core Deep Learning & Object Detection
+# ultralytics
+# torch
+# torchvision
+
+# Computer Vision & Data Handling
+# opencv-python
+# pillow
+# numpy
+# pyyaml
+
+# Visualization & Evaluation
+# matplotlib
+# seaborn
+# pandas
+# scipy
+
+# Optional / Tiled Inference & Notebooks
+# sahi
+# jupyterlab
+# ipywidgets

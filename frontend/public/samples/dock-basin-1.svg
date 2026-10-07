@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <!-- Natural inland waterway surface gradient -->
+    <linearGradient id="dockWater" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a383f" />
+      <stop offset="45%" stop-color="#34484f" />
+      <stop offset="85%" stop-color="#26343a" />
+      <stop offset="100%" stop-color="#1e292e" />
+    </linearGradient>
+
+    <!-- Gentle surface water ripple texture -->
+    <pattern id="softRipples" width="140" height="70" patternUnits="userSpaceOnUse">
+      <path d="M 0,25 Q 35,15 70,25 T 140,25" fill="none" stroke="#ffffff" stroke-width="0.8" stroke-opacity="0.12" />
+      <path d="M 10,55 Q 45,45 80,55 T 150,55" fill="none" stroke="#ffffff" stroke-width="0.6" stroke-opacity="0.09" />
+    </pattern>
+
+    <!-- Timber pontoon edge gradient -->
+    <linearGradient id="timberGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a3e35" />
+      <stop offset="50%" stop-color="#382e27" />
+      <stop offset="100%" stop-color="#2a221d" />
+    </linearGradient>
+
+    <!-- Debris textures -->
+    <radialGradient id="bottleTexture" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#e2e8f0" />
+      <stop offset="40%" stop-color="#94a3b8" />
+      <stop offset="100%" stop-color="#475569" />
+    </radialGradient>
+    <radialGradient id="foamTexture" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="60%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#64748b" />
+    </radialGradient>
+  </defs>
+
+  <!-- Water Surface -->
+  <rect width="1200" height="800" fill="url(#dockWater)" />
+  <rect width="1200" height="800" fill="url(#softRipples)" />
+
+  <!-- Wooden Dock / Pier Structure along top-right -->
+  <polygon points="800,0 1200,0 1200,320 950,220" fill="url(#timberGrad)" />
+  <line x1="800" y1="0" x2="950" y2="220" stroke="#1f1814" stroke-width="4" />
+  <line x1="950" y1="220" x2="1200" y2="320" stroke="#1f1814" stroke-width="4" />
+
+  <!-- Pier Planks -->
+  <line x1="850" y1="0" x2="990" y2="200" stroke="#5d4e43" stroke-width="1.5" />
+  <line x1="900" y1="0" x2="1040" y2="200" stroke="#5d4e43" stroke-width="1.5" />
+  <line x1="960" y1="0" x2="1100" y2="200" stroke="#5d4e43" stroke-width="1.5" />
+  <line x1="1020" y1="0" x2="1160" y2="200" stroke="#5d4e43" stroke-width="1.5" />
+
+  <!-- Subtle reflection of dock on water -->
+  <polygon points="780,0 950,240 1200,350 1200,420 920,290 760,0" fill="#1b2428" opacity="0.45" />
+
+  <!-- Floating Debris Item 1: Discarded Beverage Container (left-center: x=340, y=360) -->
+  <g transform="translate(340, 360)">
+    <!-- Water wake around bottle -->
+    <ellipse cx="25" cy="20" rx="42" ry="18" fill="#1e282d" opacity="0.6" />
+    <path d="M 0,20 Q 30,8 65,22 Q 35,32 0,20 Z" fill="none" stroke="#ffffff" stroke-width="0.8" stroke-opacity="0.25" />
+    <!-- Semi-submerged bottle body -->
+    <rect x="10" y="12" width="46" height="18" rx="6" transform="rotate(-18 33 21)" fill="url(#bottleTexture)" opacity="0.9" />
+    <!-- Bottle neck and cap -->
+    <rect x="52" y="11" width="12" height="8" rx="2" transform="rotate(-18 33 21)" fill="#334155" />
+    <ellipse cx="64" cy="7" rx="3" ry="5" fill="#0f172a" />
+  </g>
+
+  <!-- Floating Debris Item 2: Entangled Plastic Bag / Wrapper (center-right: x=680, y=480) -->
+  <g transform="translate(680, 480)">
+    <ellipse cx="35" cy="30" rx="50" ry="28" fill="#1d262b" opacity="0.5" />
+    <!-- Translucent floating polyethylene film wrinkles -->
+    <path d="M 12,18 Q 42,6 74,24 Q 68,54 36,48 Q 6,42 12,18 Z" fill="#e2e8f0" opacity="0.6" />
+    <path d="M 22,24 Q 45,14 62,28 Q 50,44 28,38 Z" fill="#ffffff" opacity="0.75" />
+    <path d="M 18,32 Q 38,28 54,34" fill="none" stroke="#94a3b8" stroke-width="1.2" />
+  </g>
+
+  <!-- Floating Debris Item 3: Expanded Polystyrene Foam Fragment (top-center: x=520, y=240) -->
+  <g transform="translate(520, 240)">
+    <ellipse cx="20" cy="18" rx="30" ry="16" fill="#1f292e" opacity="0.6" />
+    <!-- White buoyant foam block -->
+    <polygon points="8,12 36,8 44,24 16,28" fill="url(#foamTexture)" />
+    <polygon points="12,10 32,7 38,20 18,23" fill="#ffffff" opacity="0.9" />
+  </g>
+
+  <!-- Floating Debris Item 4: Small Buoyant Container (bottom-left: x=210, y=560) -->
+  <g transform="translate(210, 560)">
+    <ellipse cx="26" cy="20" rx="36" ry="18" fill="#1b2529" opacity="0.5" />
+    <rect x="10" y="10" width="34" height="20" rx="4" transform="rotate(24 27 20)" fill="#cbd5e1" opacity="0.85" />
+    <circle cx="34" cy="24" r="5" fill="#475569" />
+  </g>
+
+  <!-- Ambient natural ripples -->
+  <circle cx="380" cy="390" r="60" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.1" />
+  <circle cx="720" cy="510" r="75" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.08" />
+</svg>

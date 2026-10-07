@@ -1,0 +1,280 @@
+[
+  {
+    "runId": "run-danube-bottle",
+    "title": "Danube River surface",
+    "imageUrl": "/images/sample-danube-bottle.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1067,
+    "modelVersion": "YOLO26s-P2-v1.2",
+    "inferenceMs": 14.8,
+    "createdAt": "2026-10-06T07:15:00Z",
+    "imageCheck": "similar",
+    "reliability": {
+      "note": "Measured on TUD-GV and IWHR test data. May differ on other water bodies.",
+      "bands": [
+        { "range": "0.75 - 1.00", "precision": 96.8, "dataset": "TUD-GV" },
+        { "range": "0.50 - 0.74", "precision": 89.4, "dataset": "TUD-GV" },
+        { "range": "0.25 - 0.49", "precision": 78.1, "dataset": "TUD-GV" },
+        { "range": "0.05 - 0.24", "precision": 43.6, "dataset": "TUD-GV" },
+        { "range": "0.75 - 1.00", "precision": 88.2, "dataset": "IWHR" },
+        { "range": "0.50 - 0.74", "precision": 77.5, "dataset": "IWHR" },
+        { "range": "0.25 - 0.49", "precision": 62.9, "dataset": "IWHR" },
+        { "range": "0.05 - 0.24", "precision": 31.4, "dataset": "IWHR" }
+      ]
+    },
+    "detections": [
+      {
+        "id": "det-101",
+        "bbox": { "x1": 0.465, "y1": 0.485, "x2": 0.582, "y2": 0.595 },
+        "confidence": 0.89,
+        "typeEstimate": { "label": "plastic bottle", "note": "Clear cylindrical silhouette with reflective cap." }
+      },
+      {
+        "id": "det-102",
+        "bbox": { "x1": 0.612, "y1": 0.535, "x2": 0.695, "y2": 0.612 },
+        "confidence": 0.74,
+        "typeEstimate": { "label": "plastic container", "note": "Partially submerged rigid fragment." }
+      },
+      {
+        "id": "det-103",
+        "bbox": { "x1": 0.325, "y1": 0.620, "x2": 0.410, "y2": 0.695 },
+        "confidence": 0.63,
+        "typeEstimate": { "label": "plastic bag", "note": "Wrinkled surface film caught in current eddy." }
+      },
+      {
+        "id": "det-104",
+        "bbox": { "x1": 0.730, "y1": 0.410, "x2": 0.795, "y2": 0.475 },
+        "confidence": 0.48,
+        "typeEstimate": { "label": "foam", "note": "Light-colored buoyant fragment." }
+      },
+      {
+        "id": "det-105",
+        "bbox": { "x1": 0.210, "y1": 0.560, "x2": 0.275, "y2": 0.615 },
+        "confidence": 0.31,
+        "typeEstimate": { "label": "unknown", "note": "Small surface anomaly." }
+      },
+      {
+        "id": "det-106",
+        "bbox": { "x1": 0.815, "y1": 0.680, "x2": 0.865, "y2": 0.735 },
+        "confidence": 0.21,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-107",
+        "bbox": { "x1": 0.125, "y1": 0.420, "x2": 0.175, "y2": 0.470 },
+        "confidence": 0.17,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-108",
+        "bbox": { "x1": 0.520, "y1": 0.720, "x2": 0.565, "y2": 0.765 },
+        "confidence": 0.14,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-109",
+        "bbox": { "x1": 0.380, "y1": 0.350, "x2": 0.420, "y2": 0.390 },
+        "confidence": 0.09,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-110",
+        "bbox": { "x1": 0.670, "y1": 0.310, "x2": 0.705, "y2": 0.345 },
+        "confidence": 0.06,
+        "typeEstimate": { "label": "Too small to assess" }
+      }
+    ]
+  },
+  {
+    "runId": "run-clean-water",
+    "title": "Calm lake water",
+    "imageUrl": "/images/sample-clean-water.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1066,
+    "modelVersion": "YOLO26s-P2-v1.2",
+    "inferenceMs": 13.9,
+    "createdAt": "2026-10-06T06:50:00Z",
+    "imageCheck": "similar",
+    "reliability": {
+      "note": "Measured on TUD-GV and IWHR test data. May differ on other water bodies.",
+      "bands": [
+        { "range": "0.75 - 1.00", "precision": 96.8, "dataset": "TUD-GV" },
+        { "range": "0.50 - 0.74", "precision": 89.4, "dataset": "TUD-GV" },
+        { "range": "0.25 - 0.49", "precision": 78.1, "dataset": "TUD-GV" },
+        { "range": "0.05 - 0.24", "precision": 43.6, "dataset": "TUD-GV" },
+        { "range": "0.75 - 1.00", "precision": 88.2, "dataset": "IWHR" },
+        { "range": "0.50 - 0.74", "precision": 77.5, "dataset": "IWHR" },
+        { "range": "0.25 - 0.49", "precision": 62.9, "dataset": "IWHR" },
+        { "range": "0.05 - 0.24", "precision": 31.4, "dataset": "IWHR" }
+      ]
+    },
+    "detections": [
+      {
+        "id": "det-201",
+        "bbox": { "x1": 0.450, "y1": 0.520, "x2": 0.485, "y2": 0.555 },
+        "confidence": 0.08,
+        "typeEstimate": { "label": "Too small to assess", "note": "Water wave crest shadow." }
+      }
+    ]
+  },
+  {
+    "runId": "run-river-debris",
+    "title": "Amadi River litter zone",
+    "imageUrl": "/images/sample-river-debris.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1200,
+    "modelVersion": "YOLO26s-P2-v1.2",
+    "inferenceMs": 15.6,
+    "createdAt": "2026-10-06T05:30:00Z",
+    "imageCheck": "borderline",
+    "reliability": {
+      "note": "Measured on TUD-GV and IWHR test data. May differ on other water bodies.",
+      "bands": [
+        { "range": "0.75 - 1.00", "precision": 96.8, "dataset": "TUD-GV" },
+        { "range": "0.50 - 0.74", "precision": 89.4, "dataset": "TUD-GV" },
+        { "range": "0.25 - 0.49", "precision": 78.1, "dataset": "TUD-GV" },
+        { "range": "0.05 - 0.24", "precision": 43.6, "dataset": "TUD-GV" },
+        { "range": "0.75 - 1.00", "precision": 88.2, "dataset": "IWHR" },
+        { "range": "0.50 - 0.74", "precision": 77.5, "dataset": "IWHR" },
+        { "range": "0.25 - 0.49", "precision": 62.9, "dataset": "IWHR" },
+        { "range": "0.05 - 0.24", "precision": 31.4, "dataset": "IWHR" }
+      ]
+    },
+    "detections": [
+      {
+        "id": "det-301",
+        "bbox": { "x1": 0.380, "y1": 0.420, "x2": 0.510, "y2": 0.540 },
+        "confidence": 0.84,
+        "typeEstimate": { "label": "plastic container", "note": "Molded synthetic bottle." }
+      },
+      {
+        "id": "det-302",
+        "bbox": { "x1": 0.540, "y1": 0.380, "x2": 0.650, "y2": 0.490 },
+        "confidence": 0.78,
+        "typeEstimate": { "label": "plastic bag", "note": "Dark plastic carrier bag." }
+      },
+      {
+        "id": "det-303",
+        "bbox": { "x1": 0.260, "y1": 0.510, "x2": 0.350, "y2": 0.590 },
+        "confidence": 0.69,
+        "typeEstimate": { "label": "plastic bottle", "note": "Translucent bottle." }
+      },
+      {
+        "id": "det-304",
+        "bbox": { "x1": 0.680, "y1": 0.460, "x2": 0.760, "y2": 0.530 },
+        "confidence": 0.58,
+        "typeEstimate": { "label": "foam", "note": "Light packaging foam." }
+      },
+      {
+        "id": "det-305",
+        "bbox": { "x1": 0.180, "y1": 0.440, "x2": 0.245, "y2": 0.505 },
+        "confidence": 0.44,
+        "typeEstimate": { "label": "mixed waste" }
+      },
+      {
+        "id": "det-306",
+        "bbox": { "x1": 0.420, "y1": 0.620, "x2": 0.485, "y2": 0.680 },
+        "confidence": 0.39,
+        "typeEstimate": { "label": "organic debris", "note": "Twigs entangled with plastic wrapper." }
+      },
+      {
+        "id": "det-307",
+        "bbox": { "x1": 0.590, "y1": 0.580, "x2": 0.645, "y2": 0.635 },
+        "confidence": 0.32,
+        "typeEstimate": { "label": "unknown" }
+      },
+      {
+        "id": "det-308",
+        "bbox": { "x1": 0.720, "y1": 0.590, "x2": 0.770, "y2": 0.640 },
+        "confidence": 0.27,
+        "typeEstimate": { "label": "unknown" }
+      },
+      {
+        "id": "det-309",
+        "bbox": { "x1": 0.310, "y1": 0.350, "x2": 0.360, "y2": 0.400 },
+        "confidence": 0.22,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-310",
+        "bbox": { "x1": 0.480, "y1": 0.310, "x2": 0.525, "y2": 0.355 },
+        "confidence": 0.18,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-311",
+        "bbox": { "x1": 0.640, "y1": 0.670, "x2": 0.685, "y2": 0.715 },
+        "confidence": 0.12,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-312",
+        "bbox": { "x1": 0.220, "y1": 0.610, "x2": 0.260, "y2": 0.650 },
+        "confidence": 0.07,
+        "typeEstimate": { "label": "Too small to assess" }
+      }
+    ]
+  },
+  {
+    "runId": "run-turbid-reservoir",
+    "title": "Turbid waterway channel",
+    "imageUrl": "/images/sample-turbid-reservoir.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1200,
+    "modelVersion": "YOLO26s-P2-v1.2",
+    "inferenceMs": 16.2,
+    "createdAt": "2026-10-06T04:10:00Z",
+    "imageCheck": "unlike",
+    "reliability": {
+      "note": "Measured on TUD-GV and IWHR test data. May differ on other water bodies.",
+      "bands": [
+        { "range": "0.75 - 1.00", "precision": 96.8, "dataset": "TUD-GV" },
+        { "range": "0.50 - 0.74", "precision": 89.4, "dataset": "TUD-GV" },
+        { "range": "0.25 - 0.49", "precision": 78.1, "dataset": "TUD-GV" },
+        { "range": "0.05 - 0.24", "precision": 43.6, "dataset": "TUD-GV" },
+        { "range": "0.75 - 1.00", "precision": 88.2, "dataset": "IWHR" },
+        { "range": "0.50 - 0.74", "precision": 77.5, "dataset": "IWHR" },
+        { "range": "0.25 - 0.49", "precision": 62.9, "dataset": "IWHR" },
+        { "range": "0.05 - 0.24", "precision": 31.4, "dataset": "IWHR" }
+      ]
+    },
+    "detections": [
+      {
+        "id": "det-401",
+        "bbox": { "x1": 0.420, "y1": 0.380, "x2": 0.520, "y2": 0.480 },
+        "confidence": 0.44,
+        "typeEstimate": { "label": "unknown", "note": "Submerged silhouette obscured by high sediment turbidity." }
+      },
+      {
+        "id": "det-402",
+        "bbox": { "x1": 0.610, "y1": 0.450, "x2": 0.680, "y2": 0.520 },
+        "confidence": 0.35,
+        "typeEstimate": { "label": "unknown" }
+      },
+      {
+        "id": "det-403",
+        "bbox": { "x1": 0.310, "y1": 0.520, "x2": 0.370, "y2": 0.580 },
+        "confidence": 0.28,
+        "typeEstimate": { "label": "unknown" }
+      },
+      {
+        "id": "det-404",
+        "bbox": { "x1": 0.510, "y1": 0.560, "x2": 0.560, "y2": 0.610 },
+        "confidence": 0.19,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-405",
+        "bbox": { "x1": 0.240, "y1": 0.410, "x2": 0.285, "y2": 0.455 },
+        "confidence": 0.11,
+        "typeEstimate": { "label": "Too small to assess" }
+      },
+      {
+        "id": "det-406",
+        "bbox": { "x1": 0.690, "y1": 0.340, "x2": 0.730, "y2": 0.380 },
+        "confidence": 0.08,
+        "typeEstimate": { "label": "Too small to assess" }
+      }
+    ]
+  }
+]
