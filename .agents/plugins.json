@@ -1,8 +1,0 @@
-{
-  "entries": [
-    { "path": ".agents/plugins/ponytail" },
-    { "path": ".agents/plugins/get-shit-done" },
-    { "path": ".agents/plugins/coderabbit" },
-    { "path": ".agents/plugins/graphify" }
-  ]
-}
