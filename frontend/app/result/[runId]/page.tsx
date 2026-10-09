@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
@@ -24,6 +24,13 @@ export default function ResultPage() {
   const [run, setRun] = useState<Run | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Viewport & Image Sizing
+  const imageRef = useRef<HTMLImageElement>(null);
+  const [naturalDimensions, setNaturalDimensions] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
+  });
 
   // Viewport Controls
   const [showBoxes, setShowBoxes] = useState<boolean>(true);
@@ -68,6 +75,26 @@ export default function ResultPage() {
       })
       .finally(() => setLoading(false));
   }, [runId]);
+
+  // Sync natural dimensions from run
+  useEffect(() => {
+    if (run?.imageWidth && run?.imageHeight) {
+      setNaturalDimensions({
+        width: run.imageWidth,
+        height: run.imageHeight,
+      });
+    }
+  }, [run?.imageWidth, run?.imageHeight]);
+
+  const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    if (img.naturalWidth && img.naturalHeight) {
+      setNaturalDimensions({
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      });
+    }
+  };
 
   // Compute filtered detections
   const visibleDetections = useMemo(() => {
@@ -197,8 +224,8 @@ export default function ResultPage() {
       <div className="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
         <Navbar />
         <main className="w-full pt-28 flex-1 flex flex-col items-center justify-center gap-space-md">
-          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <div className="font-label-mono-sm text-label-mono-sm text-secondary">
+          <div className="w-10 h-10 border-4 border-teal-700 border-t-transparent rounded-full animate-spin" />
+          <div className="text-sm font-medium text-slate-600">
             Loading inference telemetry &amp; spatial annotations...
           </div>
         </main>
@@ -212,15 +239,15 @@ export default function ResultPage() {
       <div className="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
         <Navbar />
         <main className="w-full pt-28 flex-1 flex flex-col items-center justify-center gap-space-md px-gutter-lg">
-          <div className="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col items-center text-center gap-space-sm max-w-md">
-            <span className="material-symbols-outlined text-error text-[40px]">error_outline</span>
-            <h2 className="font-headline-md text-headline-md font-semibold text-on-surface">Analysis Not Found</h2>
-            <p className="font-body-sm text-body-sm text-secondary">
+          <div className="rf-card p-8 flex flex-col items-center text-center gap-4 max-w-md">
+            <span className="material-symbols-outlined text-red-600 text-[40px]">error_outline</span>
+            <h2 className="text-xl font-bold text-slate-900 tracking-tight">Analysis Not Found</h2>
+            <p className="text-sm text-slate-600 leading-relaxed">
               {error || 'This inference session could not be located in browser session storage.'}
             </p>
             <Link
               href="/analyze"
-              className="mt-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary font-body-md text-body-md font-medium"
+              className="mt-2 rf-btn-primary text-sm"
             >
               Return to Ingestion Console
             </Link>
@@ -243,46 +270,46 @@ export default function ResultPage() {
       <main className="w-full pt-16 bg-surface flex-1">
         <div className="flex flex-col w-full">
           {/* Run Telemetry & Execution Header Bar */}
-          <section className="w-full px-gutter-lg py-space-md bg-surface-container-lowest shadow-sm border-b border-outline-variant/20">
-            <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-md max-w-7xl mx-auto w-full">
-              <div className="flex flex-col gap-space-xs">
-                <div className="flex items-center gap-space-sm flex-wrap">
-                  <span className="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">
+          <section className="w-full px-gutter-lg py-3.5 bg-white border-b border-slate-200/90 shadow-[0_1px_3px_rgba(15,23,42,0.03)]">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 max-w-7xl mx-auto w-full">
+              <div className="flex flex-col gap-1.5 min-w-0">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <h1 className="text-xl sm:text-2xl text-slate-900 tracking-tight font-bold">
                     Detection Results
-                  </span>
-                  <span className="font-label-mono-sm text-label-mono-sm px-space-xs py-0.5 rounded-lg bg-primary-container text-on-primary-container font-medium">
+                  </h1>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200/80 font-medium">
                     Inference Successful
                   </span>
-                  <span className="font-label-mono-sm text-label-mono-sm px-space-xs py-0.5 rounded-lg bg-surface-container-high text-on-secondary-container">
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200/80 font-medium">
                     Single-Class Core Detector
                   </span>
                 </div>
-                <div className="flex flex-wrap items-center gap-x-space-md gap-y-1 text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+                <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1 text-slate-600 text-xs">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-secondary font-body-sm">Run ID:</span>
-                    <span className="text-on-surface font-semibold bg-surface-container px-1.5 py-0.5 rounded">
+                    <span className="text-slate-500 font-medium">Run ID:</span>
+                    <span className="font-mono text-slate-900 font-semibold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/70">
                       {run.runId}
                     </span>
                   </div>
-                  <span className="text-outline-variant">•</span>
+                  <span className="text-slate-300">•</span>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-secondary font-body-sm">Visible Detections:</span>
-                    <span className="text-primary font-semibold">{visibleDetections.length} objects</span>
+                    <span className="text-slate-500 font-medium">Visible Detections:</span>
+                    <span className="text-teal-700 font-semibold">{visibleDetections.length} objects</span>
                   </div>
-                  <span className="text-outline-variant">•</span>
+                  <span className="text-slate-300">•</span>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-secondary font-body-sm">Inference Latency:</span>
-                    <span className="text-on-surface font-semibold">{run.inferenceMs.toFixed(1)}ms</span>
+                    <span className="text-slate-500 font-medium">Inference Latency:</span>
+                    <span className="text-slate-900 font-semibold">{run.inferenceMs.toFixed(1)}ms</span>
                   </div>
-                  <span className="text-outline-variant">•</span>
+                  <span className="text-slate-300">•</span>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-secondary font-body-sm">Backend:</span>
-                    <span className="text-tertiary font-semibold">FastAPI (NEXT_PUBLIC_API_URL)</span>
+                    <span className="text-slate-500 font-medium">Backend:</span>
+                    <span className="font-mono text-slate-800 font-semibold">FastAPI (NEXT_PUBLIC_API_URL)</span>
                   </div>
-                  <span className="text-outline-variant">•</span>
+                  <span className="text-slate-300">•</span>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-secondary font-body-sm">Timestamp:</span>
-                    <span className="text-on-surface">
+                    <span className="text-slate-500 font-medium">Timestamp:</span>
+                    <span className="text-slate-700">
                       {run.createdAt ? new Date(run.createdAt).toLocaleString() : 'Recent'}
                     </span>
                   </div>
@@ -290,13 +317,13 @@ export default function ResultPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-space-sm self-stretch xl:self-auto justify-end">
+              <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap shrink-0 lg:self-center">
                 <button
                   type="button"
                   onClick={handleRerun}
-                  className="px-space-md py-space-xs rounded bg-surface-container text-on-surface font-body-md text-body-md font-medium hover:bg-surface-container-high transition-colors flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                  className="rf-btn-secondary text-xs sm:text-sm py-2 px-3.5 whitespace-nowrap cursor-pointer inline-flex items-center gap-1.5"
                 >
-                  <span className={`material-symbols-outlined text-[18px] ${isRerunning ? 'animate-spin' : ''}`}>
+                  <span className={`material-symbols-outlined text-[17px] ${isRerunning ? 'animate-spin' : ''}`}>
                     {isRerunning ? 'sync' : 'refresh'}
                   </span>
                   <span>{isRerunning ? 'Re-inferencing...' : 'Re-run Analysis'}</span>
@@ -305,9 +332,9 @@ export default function ResultPage() {
                 <button
                   type="button"
                   onClick={handleExportJson}
-                  className="px-space-md py-space-xs rounded bg-surface-container text-on-surface font-body-md text-body-md font-medium hover:bg-surface-container-high transition-colors flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                  className="rf-btn-secondary text-xs sm:text-sm py-2 px-3.5 whitespace-nowrap cursor-pointer inline-flex items-center gap-1.5"
                 >
-                  <span className="material-symbols-outlined text-[18px]">
+                  <span className="material-symbols-outlined text-[17px]">
                     {jsonExportSuccess ? 'check' : 'data_object'}
                   </span>
                   <span>{jsonExportSuccess ? 'JSON Copied!' : 'Export JSON Annotation'}</span>
@@ -318,9 +345,9 @@ export default function ResultPage() {
                   download={`robustfloat_${run.runId}.jpg`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-space-md py-space-xs rounded bg-primary text-on-primary font-body-md text-body-md font-medium hover:bg-primary-container transition-colors flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                  className="rf-btn-primary text-xs sm:text-sm py-2 px-3.5 whitespace-nowrap cursor-pointer inline-flex items-center gap-1.5"
                 >
-                  <span className="material-symbols-outlined text-[18px]">download</span>
+                  <span className="material-symbols-outlined text-[17px]">download</span>
                   <span>Download Rendered Image</span>
                 </a>
               </div>
@@ -329,17 +356,17 @@ export default function ResultPage() {
 
           {/* Fallback Warning / 0-Waste Banner */}
           {(visibleDetections.length === 0 || fallbackBannerVisible) && (
-            <section className="w-full px-gutter-lg pt-space-md max-w-7xl mx-auto">
-              <div className="w-full p-space-md rounded-xl bg-surface-container flex items-center justify-between gap-space-md shadow-sm">
-                <div className="flex items-center gap-space-md">
-                  <div className="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary">
-                    <span className="material-symbols-outlined text-[22px]">water</span>
+            <section className="w-full px-gutter-lg pt-4 max-w-7xl mx-auto">
+              <div className="w-full p-4 rounded-xl bg-amber-50/80 border border-amber-200/90 flex items-center justify-between gap-4 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-800 shrink-0">
+                    <span className="material-symbols-outlined text-[20px]">water</span>
                   </div>
                   <div>
-                    <span className="font-headline-sm text-headline-sm text-on-surface font-semibold block">
+                    <span className="text-sm text-amber-900 font-semibold block">
                       State Notification: No Visible Waste Above Cutoff
                     </span>
-                    <span className="font-body-sm text-body-sm text-on-surface-variant">
+                    <span className="text-xs text-amber-800/90 leading-relaxed">
                       Zero instances localized above threshold &ge; {confidenceThreshold.toFixed(2)}. Adjust the slider or inspect surface directly.
                     </span>
                   </div>
@@ -347,7 +374,7 @@ export default function ResultPage() {
                 <button
                   type="button"
                   onClick={() => setFallbackBannerVisible(false)}
-                  className="px-space-md py-1 rounded bg-surface-container-high text-on-surface font-label-mono-sm text-label-mono-sm hover:bg-surface-container-highest transition-colors cursor-pointer"
+                  className="px-3 py-1 rounded-lg bg-amber-100 hover:bg-amber-200/80 text-amber-900 text-xs font-medium transition-colors cursor-pointer shrink-0"
                 >
                   Dismiss
                 </button>
@@ -361,35 +388,35 @@ export default function ResultPage() {
               {/* LEFT COLUMN: Image Analytical Canvas & Overlays (7 cols desktop) */}
               <div className="xl:col-span-7 flex flex-col gap-space-md">
                 {/* Primary Image Card */}
-                <div className="w-full rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md">
+                <div className="rf-card p-5 flex flex-col gap-4">
                   {/* Viewport Interactive Toolbar */}
-                  <div className="flex flex-wrap items-center justify-between gap-space-sm pb-space-xs">
-                    <div className="flex items-center gap-space-sm">
-                      <span className="font-headline-md text-headline-md text-on-surface font-semibold">
+                  <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-lg font-bold text-slate-900 tracking-tight">
                         Analyzed Stream Viewport
                       </span>
-                      <span className="font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded bg-surface-container text-secondary font-medium uppercase">
+                      <span className="text-xs px-2.5 py-0.5 rounded bg-slate-100 text-slate-600 font-mono font-medium border border-slate-200/70">
                         {run.title || 'CAM_04_NORTH_ESTUARY'}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-space-md flex-wrap">
+                    <div className="flex items-center gap-3 flex-wrap">
                       {/* BBox Switch */}
                       <label className="flex items-center gap-2 cursor-pointer select-none">
                         <input
                           type="checkbox"
                           checked={showBoxes}
                           onChange={(e) => setShowBoxes(e.target.checked)}
-                          className="w-4 h-4 accent-primary rounded cursor-pointer"
+                          className="w-4 h-4 accent-teal-800 rounded cursor-pointer"
                         />
-                        <span className="font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+                        <span className="text-xs font-medium text-slate-700">
                           BBox Overlays
                         </span>
                       </label>
 
                       {/* Threshold Slider */}
-                      <div className="flex items-center gap-2 bg-surface-container-low px-2.5 py-1 rounded">
-                        <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                      <div className="flex items-center gap-2 bg-slate-50 border border-slate-200/80 px-2.5 py-1 rounded-lg">
+                        <span className="text-xs text-slate-500 font-medium">
                           Threshold:
                         </span>
                         <input
@@ -399,9 +426,9 @@ export default function ResultPage() {
                           step="0.05"
                           value={confidenceThreshold}
                           onChange={(e) => setConfidenceThreshold(parseFloat(e.target.value))}
-                          className="w-20 accent-primary cursor-pointer"
+                          className="w-20 accent-teal-800 cursor-pointer"
                         />
-                        <span className="font-label-mono-sm text-label-mono-sm font-semibold text-on-surface">
+                        <span className="text-xs font-mono font-bold text-slate-900">
                           {confidenceThreshold.toFixed(2)}
                         </span>
                       </div>
@@ -410,10 +437,10 @@ export default function ResultPage() {
                       <button
                         type="button"
                         onClick={() => setIsZoomed(!isZoomed)}
-                        className={`w-8 h-8 rounded flex items-center justify-center transition-colors cursor-pointer ${
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors border cursor-pointer ${
                           isZoomed
-                            ? 'bg-primary-container text-on-primary-container'
-                            : 'bg-surface-container text-on-surface hover:bg-surface-container-high'
+                            ? 'bg-teal-50 text-teal-800 border-teal-300'
+                            : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                         }`}
                         title="Toggle Zoom View"
                       >
@@ -424,203 +451,242 @@ export default function ResultPage() {
                     </div>
                   </div>
 
-                  {/* Responsive Viewport with Overlays */}
-                  <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-inverse-surface group select-none shadow-inner">
-                    {/* Real Uploaded Photo from Backend */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={displayImageUrl}
-                      alt="Analyzed Inland Waterway Feed"
-                      className={`w-full h-full object-cover transition-transform duration-300 pointer-events-none ${
-                        isZoomed ? 'scale-125' : 'scale-100'
-                      }`}
-                    />
-
+                  {/* Responsive Viewport with Overlays - Natural Geometry Container */}
+                  <div className="relative w-full rounded-lg overflow-hidden bg-slate-950 flex items-center justify-center select-none shadow-inner border border-slate-200/80 min-h-[360px] max-h-[75vh]">
                     {/* Coordinate Grid Overlay */}
-                    <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#89f5e7_1px,transparent_1px)] [background-size:24px_24px]"></div>
+                    <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#89f5e7_1px,transparent_1px)] [background-size:24px_24px] z-0"></div>
 
                     {/* Optical Sensor HUD Top Elements */}
-                    <div className="absolute top-3 left-3 px-2 py-1 rounded bg-inverse-surface/85 backdrop-blur-md font-label-mono-sm text-label-mono-sm text-primary-fixed flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-primary-fixed animate-ping"></span>
-                      <span>YOLO26s-P2 STREAM READY • {run.imageWidth}×{run.imageHeight}</span>
+                    <div className="absolute top-3 left-3 px-2.5 py-1 rounded bg-slate-900/85 backdrop-blur-md text-xs font-mono text-teal-200 flex items-center gap-2 border border-slate-700/50 z-20 pointer-events-none">
+                      <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+                      <span>YOLO26s-P2 STREAM READY • {naturalDimensions.width || run.imageWidth}×{naturalDimensions.height || run.imageHeight}</span>
                     </div>
 
-                    <div className="absolute top-3 right-3 px-2 py-1 rounded bg-inverse-surface/85 backdrop-blur-md font-label-mono-sm text-label-mono-sm text-surface-variant">
+                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-900/85 backdrop-blur-md text-xs font-mono text-slate-300 border border-slate-700/50 z-20 pointer-events-none">
                       FOCAL: 28mm • FLIR OPTICAL CH.1
                     </div>
 
-                    {/* Dynamic Bounding Box Layer */}
-                    {showBoxes && (
-                      <div className="absolute inset-0 pointer-events-none">
-                        {run.detections.map((det, index) => {
-                          const isVisible = det.confidence >= confidenceThreshold;
-                          const isSelected = selectedDetectionId === det.id;
+                    {/* Optical Sensor Crosshair in Center */}
+                    <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30 z-20">
+                      <div className="w-8 h-8 relative">
+                        <span className="absolute top-1/2 left-0 w-full h-[1px] bg-teal-400"></span>
+                        <span className="absolute left-1/2 top-0 h-full w-[1px] bg-teal-400"></span>
+                      </div>
+                    </div>
 
-                          // Compute coordinates (normalized 0..1 to percentage)
-                          const left = `${det.bbox.x1 * 100}%`;
-                          const top = `${det.bbox.y1 * 100}%`;
-                          const width = `${Math.max(0.01, det.bbox.x2 - det.bbox.x1) * 100}%`;
-                          const height = `${Math.max(0.01, det.bbox.y2 - det.bbox.y1) * 100}%`;
+                    {/* Shared Image & SVG Overlay Positioning Container */}
+                    <div
+                      className={`relative inline-block leading-none transition-transform duration-300 max-w-full max-h-[75vh] z-10 ${
+                        isZoomed ? 'scale-125' : 'scale-100'
+                      }`}
+                    >
+                      {/* Real Uploaded Photo from Backend (Preserves exact aspect ratio) */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        ref={imageRef}
+                        src={displayImageUrl}
+                        alt="Analyzed Inland Waterway Feed"
+                        onLoad={handleImageLoad}
+                        className="block w-auto h-auto max-w-full max-h-[75vh] select-none pointer-events-none"
+                      />
 
-                          // Auxiliary classifier result
-                          const rawLabel =
-                            det.type_prediction?.class_name ||
-                            det.typeEstimate?.label ||
-                            'Plastic Waste';
-                          const typeLabel = rawLabel
-                            .replace(/_/g, ' ')
-                            .replace(/\b\w/g, (c) => c.toUpperCase());
-                          const typeConfidence = (
-                            (det.type_prediction?.confidence || det.confidence) * 100
-                          ).toFixed(1);
+                      {/* Dynamic Bounding Box Layer in SVG Coordinates */}
+                      {showBoxes && (naturalDimensions.width || run.imageWidth) > 0 && (
+                        <svg
+                          className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
+                          viewBox={`0 0 ${naturalDimensions.width || run.imageWidth} ${naturalDimensions.height || run.imageHeight}`}
+                        >
+                          {run.detections.map((det) => {
+                            const isVisible = det.confidence >= confidenceThreshold;
+                            if (!isVisible) return null;
 
-                          return (
-                            <div
-                              key={det.id}
-                              onClick={() => setSelectedDetectionId(isSelected ? null : det.id)}
-                              onMouseEnter={() => setSelectedDetectionId(det.id)}
-                              onMouseLeave={() => {
-                                if (!isSelected) setSelectedDetectionId(null);
-                              }}
-                              className={`absolute pointer-events-auto transition-all cursor-pointer ${
-                                isVisible ? 'opacity-100' : 'opacity-15 grayscale'
-                              }`}
-                              style={{ left, top, width, height }}
-                            >
-                              {/* SVG Bounding Box with Optical Corner Reticles */}
-                              <svg
-                                className="absolute inset-0 w-full h-full overflow-visible"
-                                preserveAspectRatio="none"
-                                viewBox="0 0 100 100"
+                            const isSelected = selectedDetectionId === det.id;
+                            const nw = naturalDimensions.width || run.imageWidth;
+                            const nh = naturalDimensions.height || run.imageHeight;
+
+                            // Real detector coordinates from API response
+                            const rawX1 = det.pixel_bbox ? det.pixel_bbox.x1 : det.bbox.x1 * nw;
+                            const rawY1 = det.pixel_bbox ? det.pixel_bbox.y1 : det.bbox.y1 * nh;
+                            const rawX2 = det.pixel_bbox ? det.pixel_bbox.x2 : det.bbox.x2 * nw;
+                            const rawY2 = det.pixel_bbox ? det.pixel_bbox.y2 : det.bbox.y2 * nh;
+
+                            // Boundary checks
+                            const x1 = Math.max(0, Math.min(rawX1, nw));
+                            const y1 = Math.max(0, Math.min(rawY1, nh));
+                            const x2 = Math.max(x1, Math.min(rawX2, nw));
+                            const y2 = Math.max(y1, Math.min(rawY2, nh));
+                            const width = x2 - x1;
+                            const height = y2 - y1;
+
+                            if (width <= 0 || height <= 0) return null;
+
+                            const reticleLen = Math.min(width * 0.25, height * 0.25, Math.max(6, nw * 0.018));
+
+                            return (
+                              <g
+                                key={det.id}
+                                className="cursor-pointer pointer-events-auto"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedDetectionId(isSelected ? null : det.id);
+                                }}
+                                onMouseEnter={() => setSelectedDetectionId(det.id)}
+                                onMouseLeave={() => {
+                                  if (!isSelected) setSelectedDetectionId(null);
+                                }}
                               >
+                                {/* Main Bounding Box Rectangle */}
                                 <rect
-                                  x="0"
-                                  y="0"
-                                  width="100"
-                                  height="100"
-                                  fill="rgba(0, 104, 95, 0.12)"
-                                  stroke="#00685f"
-                                  strokeWidth={isSelected ? '3.5' : '2.5'}
+                                  x={x1}
+                                  y={y1}
+                                  width={width}
+                                  height={height}
+                                  fill={isSelected ? 'rgba(0, 104, 95, 0.22)' : 'rgba(0, 104, 95, 0.12)'}
+                                  stroke={isSelected ? '#00685f' : '#0d9488'}
+                                  strokeWidth={isSelected ? '3.5' : '2'}
                                   vectorEffect="non-scaling-stroke"
                                 />
-                                {/* Optical Corner Reticles */}
-                                <path
-                                  d="M 0 12 L 0 0 L 12 0"
-                                  fill="none"
-                                  stroke="#89f5e7"
-                                  strokeWidth="4"
-                                  vectorEffect="non-scaling-stroke"
-                                />
-                                <path
-                                  d="M 88 0 L 100 0 L 100 12"
-                                  fill="none"
-                                  stroke="#89f5e7"
-                                  strokeWidth="4"
-                                  vectorEffect="non-scaling-stroke"
-                                />
-                                <path
-                                  d="M 0 88 L 0 100 L 12 100"
-                                  fill="none"
-                                  stroke="#89f5e7"
-                                  strokeWidth="4"
-                                  vectorEffect="non-scaling-stroke"
-                                />
-                                <path
-                                  d="M 88 100 L 100 100 L 100 88"
-                                  fill="none"
-                                  stroke="#89f5e7"
-                                  strokeWidth="4"
-                                  vectorEffect="non-scaling-stroke"
-                                />
-                              </svg>
 
-                              {/* Double Badge Header */}
-                              <div className="absolute -top-7 left-0 flex flex-nowrap items-center gap-1 whitespace-nowrap shadow-md">
-                                <span className="font-label-mono-sm text-label-mono-sm px-1.5 py-0.5 rounded bg-primary text-on-primary font-semibold tracking-tight">
+                                {/* Optical Corner Reticles */}
+                                {reticleLen > 2 && (
+                                  <>
+                                    <path
+                                      d={`M ${x1} ${y1 + reticleLen} L ${x1} ${y1} L ${x1 + reticleLen} ${y1}`}
+                                      fill="none"
+                                      stroke="#89f5e7"
+                                      strokeWidth="3.5"
+                                      vectorEffect="non-scaling-stroke"
+                                    />
+                                    <path
+                                      d={`M ${x2 - reticleLen} ${y1} L ${x2} ${y1} L ${x2} ${y1 + reticleLen}`}
+                                      fill="none"
+                                      stroke="#89f5e7"
+                                      strokeWidth="3.5"
+                                      vectorEffect="non-scaling-stroke"
+                                    />
+                                    <path
+                                      d={`M ${x1} ${y2 - reticleLen} L ${x1} ${y2} L ${x1 + reticleLen} ${y2}`}
+                                      fill="none"
+                                      stroke="#89f5e7"
+                                      strokeWidth="3.5"
+                                      vectorEffect="non-scaling-stroke"
+                                    />
+                                    <path
+                                      d={`M ${x2 - reticleLen} ${y2} L ${x2} ${y2} L ${x2} ${y2 - reticleLen}`}
+                                      fill="none"
+                                      stroke="#89f5e7"
+                                      strokeWidth="3.5"
+                                      vectorEffect="non-scaling-stroke"
+                                    />
+                                  </>
+                                )}
+                              </g>
+                            );
+                          })}
+                        </svg>
+                      )}
+
+                      {/* Anchored Detection Label Badges */}
+                      {showBoxes && (naturalDimensions.width || run.imageWidth) > 0 && (
+                        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                          {run.detections.map((det, index) => {
+                            const isVisible = det.confidence >= confidenceThreshold;
+                            if (!isVisible) return null;
+
+                            const isSelected = selectedDetectionId === det.id;
+                            const nw = naturalDimensions.width || run.imageWidth;
+                            const nh = naturalDimensions.height || run.imageHeight;
+
+                            const rawX1 = det.pixel_bbox ? det.pixel_bbox.x1 : det.bbox.x1 * nw;
+                            const rawY1 = det.pixel_bbox ? det.pixel_bbox.y1 : det.bbox.y1 * nh;
+                            const rawX2 = det.pixel_bbox ? det.pixel_bbox.x2 : det.bbox.x2 * nw;
+
+                            const x1 = Math.max(0, Math.min(rawX1, nw));
+                            const y1 = Math.max(0, Math.min(rawY1, nh));
+                            const x2 = Math.max(x1, Math.min(rawX2, nw));
+
+                            const leftPct = (x1 / nw) * 100;
+                            const topPct = (y1 / nh) * 100;
+                            const rightPct = (x2 / nw) * 100;
+
+                            // Intelligent repositioning so label stays inside the visible image
+                            const isNearTop = topPct < 7;
+                            const isNearRight = leftPct > 68;
+
+                            // Auxiliary classifier result
+                            const rawLabel =
+                              det.type_prediction?.class_name ||
+                              det.typeEstimate?.label ||
+                              'Plastic Waste';
+                            const typeLabel = rawLabel
+                              .replace(/_/g, ' ')
+                              .replace(/\b\w/g, (c) => c.toUpperCase());
+                            const typeConfidence = (
+                              (det.type_prediction?.confidence || det.confidence) * 100
+                            ).toFixed(1);
+
+                            return (
+                              <div
+                                key={`label-${det.id}`}
+                                className={`absolute pointer-events-auto flex items-center gap-1.5 whitespace-nowrap z-10 cursor-pointer transition-all ${
+                                  isSelected ? 'scale-105' : 'scale-100'
+                                }`}
+                                style={{
+                                  top: `${topPct}%`,
+                                  ...(isNearRight
+                                    ? { right: `${Math.max(0, 100 - rightPct)}%` }
+                                    : { left: `${Math.max(0, leftPct)}%` }),
+                                  transform: isNearTop
+                                    ? 'translateY(4px)'
+                                    : 'translateY(-100%) translateY(-4px)',
+                                }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedDetectionId(isSelected ? null : det.id);
+                                }}
+                                onMouseEnter={() => setSelectedDetectionId(det.id)}
+                                onMouseLeave={() => {
+                                  if (!isSelected) setSelectedDetectionId(null);
+                                }}
+                              >
+                                <span className="text-[11px] font-sans px-2 py-0.5 rounded bg-teal-800 text-white font-semibold tracking-tight shadow-md">
                                   #{index + 1} Waste: {(det.confidence * 100).toFixed(1)}%
                                 </span>
-                                <span className="font-label-mono-sm text-label-mono-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-secondary-fixed font-medium">
+                                <span className="text-[11px] font-sans px-2 py-0.5 rounded bg-white text-slate-800 border border-slate-200/90 font-medium shadow-md">
                                   Classified as {typeLabel} ({typeConfidence}%)
                                 </span>
                               </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-
-                    {/* Optical Sensor Crosshair in Center */}
-                    <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
-                      <div className="w-8 h-8 relative">
-                        <span className="absolute top-1/2 left-0 w-full h-[1px] bg-primary-fixed"></span>
-                        <span className="absolute left-1/2 top-0 h-full w-[1px] bg-primary-fixed"></span>
-                      </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   {/* Technical Legend */}
-                  <div className="p-space-sm rounded-lg bg-surface-container-low flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
-                    <div className="flex items-center gap-space-md flex-wrap">
+                  <div className="p-3.5 rounded-xl bg-slate-50/90 border border-slate-200/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+                    <div className="flex items-center gap-4 flex-wrap text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="w-3.5 h-3.5 rounded-sm bg-primary border-0 inline-block shadow-sm"></span>
-                        <span className="font-label-mono-sm text-label-mono-sm text-on-surface">
-                          Solid Teal Box: Primary Detection (<span className="text-primary font-semibold">YOLO26s-P2 floating_waste</span>)
+                        <span className="w-3.5 h-3.5 rounded-sm bg-teal-800 inline-block shadow-sm"></span>
+                        <span className="text-slate-700">
+                          Solid Teal Box: Primary Detection (<span className="text-teal-800 font-semibold">YOLO26s-P2 floating_waste</span>)
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="w-3.5 h-3.5 rounded-sm bg-surface-container-high inline-block"></span>
-                        <span className="font-label-mono-sm text-label-mono-sm text-on-surface">
-                          Blue/Slate Tag: Auxiliary Classified Type (<span className="text-secondary font-semibold">MARINE-DEBRIS640 probabilistic estimate</span>)
+                        <span className="w-3.5 h-3.5 rounded-sm bg-slate-200 border border-slate-300 inline-block"></span>
+                        <span className="text-slate-700">
+                          Light Tag: Auxiliary Classified Type (<span className="text-slate-700 font-semibold">MARINE-DEBRIS640 probabilistic estimate</span>)
                         </span>
                       </div>
                     </div>
                     <button
                       type="button"
                       onClick={() => setFallbackBannerVisible(!fallbackBannerVisible)}
-                      className="text-tertiary hover:underline font-label-mono-sm text-label-mono-sm flex items-center gap-1 cursor-pointer"
+                      className="text-teal-700 hover:text-teal-900 font-medium text-xs flex items-center gap-1 cursor-pointer"
                     >
-                      <span className="material-symbols-outlined text-[14px]">visibility</span>
+                      <span className="material-symbols-outlined text-[15px]">visibility</span>
                       <span>Toggle Fallback Banner</span>
                     </button>
-                  </div>
-                </div>
-
-                {/* Hydrodynamic Telemetry Strip */}
-                <div className="grid grid-cols-3 gap-space-sm">
-                  <div className="bg-surface-container-lowest p-space-sm rounded-lg shadow-sm flex items-center justify-between">
-                    <div>
-                      <span className="font-label-mono-sm text-label-mono-sm text-secondary block">
-                        Turbidity Profile
-                      </span>
-                      <span className="font-headline-sm text-headline-sm text-on-surface font-semibold">
-                        14.2 NTU
-                      </span>
-                    </div>
-                    <span className="material-symbols-outlined text-tertiary text-[20px]">opacity</span>
-                  </div>
-
-                  <div className="bg-surface-container-lowest p-space-sm rounded-lg shadow-sm flex items-center justify-between">
-                    <div>
-                      <span className="font-label-mono-sm text-label-mono-sm text-secondary block">
-                        Estimated Velocity
-                      </span>
-                      <span className="font-headline-sm text-headline-sm text-on-surface font-semibold">
-                        0.42 m/s
-                      </span>
-                    </div>
-                    <span className="material-symbols-outlined text-tertiary text-[20px]">speed</span>
-                  </div>
-
-                  <div className="bg-surface-container-lowest p-space-sm rounded-lg shadow-sm flex items-center justify-between">
-                    <div>
-                      <span className="font-label-mono-sm text-label-mono-sm text-secondary block">
-                        Sun Glint Interference
-                      </span>
-                      <span className="font-headline-sm text-headline-sm text-primary font-semibold">
-                        Low (8.1%)
-                      </span>
-                    </div>
-                    <span className="material-symbols-outlined text-primary text-[20px]">wb_sunny</span>
                   </div>
                 </div>
               </div>
@@ -628,68 +694,68 @@ export default function ResultPage() {
               {/* RIGHT COLUMN: Stacked Analytical Cards (5 cols desktop) */}
               <div className="xl:col-span-5 flex flex-col gap-space-md">
                 {/* 1. Detection Summary Card */}
-                <div className="w-full rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md">
-                  <div className="flex items-center justify-between">
-                    <span className="font-headline-md text-headline-md text-on-surface font-semibold">
+                <div className="rf-card p-5 flex flex-col gap-4">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <span className="text-lg font-bold text-slate-900 tracking-tight">
                       Detection Summary
                     </span>
-                    <span className="font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded bg-surface-container text-primary font-semibold">
+                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200/80 font-semibold">
                       Stage 1 Verified
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-space-sm">
-                    <div className="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
-                      <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="rf-subcard p-3 flex flex-col justify-between">
+                      <span className="text-xs text-slate-500 font-medium">
                         Total Visible Objects
                       </span>
-                      <div className="flex items-baseline gap-2 mt-1">
-                        <span className="font-display text-display leading-none text-on-surface">
+                      <div className="flex items-baseline gap-1.5 mt-1.5">
+                        <span className="text-3xl font-bold leading-none text-slate-900 tracking-tight">
                           {stats.count}
                         </span>
-                        <span className="font-label-mono-sm text-label-mono-sm text-primary font-medium">
+                        <span className="text-xs text-teal-700 font-medium">
                           debris items
                         </span>
                       </div>
                     </div>
 
-                    <div className="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
-                      <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                    <div className="rf-subcard p-3 flex flex-col justify-between">
+                      <span className="text-xs text-slate-500 font-medium">
                         Average Detection Conf
                       </span>
-                      <div className="flex items-baseline gap-2 mt-1">
-                        <span className="font-headline-lg text-headline-lg text-on-surface font-semibold">
+                      <div className="flex items-baseline gap-1.5 mt-1.5">
+                        <span className="text-2xl font-bold text-slate-900 tracking-tight">
                           {(stats.avgConf * 100).toFixed(1)}%
                         </span>
-                        <span className="font-label-mono-sm text-label-mono-sm text-primary font-medium">
+                        <span className="text-xs text-teal-700 font-medium">
                           high-stat
                         </span>
                       </div>
                     </div>
 
-                    <div className="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
-                      <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                    <div className="rf-subcard p-3 flex flex-col justify-between">
+                      <span className="text-xs text-slate-500 font-medium">
                         Highest Conf Detection
                       </span>
-                      <div className="flex items-baseline gap-2 mt-1">
-                        <span className="font-headline-lg text-headline-lg text-on-surface font-semibold">
+                      <div className="flex items-baseline gap-1.5 mt-1.5">
+                        <span className="text-2xl font-bold text-slate-900 tracking-tight">
                           {(stats.maxConf * 100).toFixed(1)}%
                         </span>
-                        <span className="font-label-mono-sm text-label-mono-sm text-secondary font-medium">
-                          (Object #{stats.maxIndex + 1})
+                        <span className="text-xs text-slate-500 font-medium">
+                          (#{stats.maxIndex + 1})
                         </span>
                       </div>
                     </div>
 
-                    <div className="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
-                      <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                    <div className="rf-subcard p-3 flex flex-col justify-between">
+                      <span className="text-xs text-slate-500 font-medium">
                         Processing Pipeline
                       </span>
                       <div className="flex flex-col mt-1">
-                        <span className="font-label-mono-md text-label-mono-md text-on-surface font-semibold">
+                        <span className="text-xs font-semibold text-slate-900">
                           {run.inferenceMs.toFixed(1)}ms (Detector)
                         </span>
-                        <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                        <span className="text-xs text-slate-500">
                           + 12.0ms (Classifier)
                         </span>
                       </div>
@@ -698,40 +764,40 @@ export default function ResultPage() {
                 </div>
 
                 {/* 2. Object Type Context Card */}
-                <div className="w-full rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md">
-                  <div className="flex items-center justify-between">
-                    <span className="font-headline-md text-headline-md text-on-surface font-semibold">
+                <div className="rf-card p-5 flex flex-col gap-3.5">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <span className="text-lg font-bold text-slate-900 tracking-tight">
                       Object Type Context
                     </span>
-                    <span className="font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded bg-surface-container text-on-secondary-container">
+                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200/80 font-medium">
                       Auxiliary Classifier
                     </span>
                   </div>
 
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
+                  <p className="text-xs text-slate-600 leading-relaxed">
                     Multi-class secondary inference probabilistically tags identified bounding patches without retraining core detector backbone.
                   </p>
 
                   {/* Confidence Breakdown Bars */}
-                  <div className="flex flex-col gap-space-sm">
+                  <div className="flex flex-col gap-2.5">
                     {typeDistribution.length > 0 ? (
                       typeDistribution.map((item, idx) => {
-                        const colors = ['bg-primary', 'bg-tertiary', 'bg-secondary', 'bg-outline'];
+                        const colors = ['bg-teal-700', 'bg-cyan-700', 'bg-slate-600', 'bg-slate-400'];
                         const dotColor = colors[idx % colors.length];
                         const pctStr = `${(item.avgConf * 100).toFixed(1)}%`;
                         return (
                           <div key={item.label} className="flex flex-col gap-1">
-                            <div className="flex items-center justify-between font-label-mono-sm text-label-mono-sm">
-                              <span className="text-on-surface font-medium flex items-center gap-1.5">
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-slate-800 font-medium flex items-center gap-1.5">
                                 <span className={`w-2 h-2 rounded-full ${dotColor}`}></span>
                                 Classified as {item.label}
                               </span>
-                              <span className="text-secondary">
+                              <span className="text-slate-500">
                                 {item.count} object{item.count > 1 ? 's' : ''}{' '}
-                                <span className="text-on-surface font-semibold">({pctStr})</span>
+                                <span className="text-slate-900 font-semibold">({pctStr})</span>
                               </span>
                             </div>
-                            <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+                            <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden">
                               <div
                                 className={`h-full ${dotColor} rounded-full transition-all duration-500`}
                                 style={{ width: pctStr }}
@@ -741,81 +807,81 @@ export default function ResultPage() {
                         );
                       })
                     ) : (
-                      <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                      <span className="text-xs text-slate-500">
                         No material classifications at this threshold.
                       </span>
                     )}
                   </div>
 
                   {/* Note Compliance Pill */}
-                  <div className="p-space-xs px-space-sm rounded bg-surface-container flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[16px] text-secondary">info</span>
-                    <span className="font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+                  <div className="p-2.5 px-3 rounded-lg bg-slate-50/90 border border-slate-200/80 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[16px] text-slate-500 shrink-0">info</span>
+                    <span className="text-xs text-slate-600 leading-normal">
                       Object-type estimates are probabilistic predictions from auxiliary MARINE-DEBRIS640 model.
                     </span>
                   </div>
                 </div>
 
                 {/* 3. Cross-Domain Model Card */}
-                <div className="w-full rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="font-headline-md text-headline-md text-on-surface font-semibold">
+                <div className="rf-card p-5 flex flex-col gap-3.5">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <span className="text-lg font-bold text-slate-900 tracking-tight">
                       Model Specification
                     </span>
-                    <span className="font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-medium">
+                    <span className="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200/80 font-mono font-medium">
                       v2.6-stable
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-headline-sm text-headline-sm text-primary font-bold">
+                    <span className="text-base font-bold text-teal-800">
                       {run.modelVersion || 'YOLO26s-P2 Unified'}
                     </span>
-                    <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                    <span className="text-xs text-slate-500 font-mono">
                       / 11.4M Params
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-space-xs pt-1">
-                    <div className="p-2 rounded bg-surface-container-low font-label-mono-sm text-label-mono-sm">
-                      <span className="text-secondary block">Classes:</span>
-                      <span className="text-on-surface font-semibold">1 (target: floating_waste)</span>
+                  <div className="grid grid-cols-2 gap-2 pt-0.5">
+                    <div className="rf-subcard p-2 text-xs">
+                      <span className="text-slate-500 block font-medium">Classes:</span>
+                      <span className="text-slate-900 font-semibold mt-0.5 block">1 (floating_waste)</span>
                     </div>
-                    <div className="p-2 rounded bg-surface-container-low font-label-mono-sm text-label-mono-sm">
-                      <span className="text-secondary block">Input Res:</span>
-                      <span className="text-on-surface font-semibold">640×640 (letterboxed)</span>
+                    <div className="rf-subcard p-2 text-xs">
+                      <span className="text-slate-500 block font-medium">Input Res:</span>
+                      <span className="text-slate-900 font-semibold mt-0.5 block">640×640</span>
                     </div>
-                    <div className="p-2 rounded bg-surface-container-low font-label-mono-sm text-label-mono-sm">
-                      <span className="text-secondary block">Architecture:</span>
-                      <span className="text-on-surface font-semibold">P2/P3/P4/P5 Multi-Scale FPN</span>
+                    <div className="rf-subcard p-2 text-xs">
+                      <span className="text-slate-500 block font-medium">Architecture:</span>
+                      <span className="text-slate-900 font-semibold mt-0.5 block">P2-P5 FPN Neck</span>
                     </div>
-                    <div className="p-2 rounded bg-surface-container-low font-label-mono-sm text-label-mono-sm">
-                      <span className="text-secondary block">Trained Dataset:</span>
-                      <span className="text-on-surface font-semibold">TUD-GV + IWHR Cross-River</span>
+                    <div className="rf-subcard p-2 text-xs">
+                      <span className="text-slate-500 block font-medium">Dataset:</span>
+                      <span className="text-slate-900 font-semibold mt-0.5 block">TUD-GV + IWHR</span>
                     </div>
                   </div>
                 </div>
 
                 {/* 4. Evidence & Analysis Card */}
-                <div className="w-full rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="font-headline-md text-headline-md text-on-surface font-semibold">
+                <div className="rf-card p-5 flex flex-col gap-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <span className="text-lg font-bold text-slate-900 tracking-tight">
                       Evidence-Based Analysis
                     </span>
-                    <div className="flex items-center gap-1 text-primary">
+                    <div className="flex items-center gap-1 text-teal-700">
                       <span className="material-symbols-outlined text-[18px]">verified</span>
-                      <span className="font-label-mono-sm text-label-mono-sm font-semibold">LLM Grounded</span>
+                      <span className="text-xs font-semibold">LLM Grounded</span>
                     </div>
                   </div>
-                  <p className="font-body-md text-body-md text-on-surface leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                     Detection identified {stats.count} floating debris instances concentrated along the nearshore riparian eddy. High proportion of buoyant polymers poses potential downstream water intake obstruction.
                   </p>
                   <div className="flex flex-wrap gap-1.5 pt-1">
-                    <span className="font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded bg-surface-container text-on-secondary-container">
-                      Grounded in Current Detections
+                    <span className="text-xs px-2.5 py-0.5 rounded-md bg-slate-100 border border-slate-200/80 text-slate-700 font-medium">
+                      Grounded in Detections
                     </span>
-                    <span className="font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded bg-surface-container text-on-secondary-container">
+                    <span className="text-xs px-2.5 py-0.5 rounded-md bg-slate-100 border border-slate-200/80 text-slate-700 font-medium">
                       DuckDB Retrieval Verified
                     </span>
-                    <span className="font-label-mono-sm text-label-mono-sm px-2 py-0.5 rounded bg-primary-container text-on-primary-container">
+                    <span className="text-xs px-2.5 py-0.5 rounded-md bg-teal-50 border border-teal-200/80 text-teal-800 font-medium">
                       Groq GPT-OSS-120B
                     </span>
                   </div>
@@ -825,32 +891,32 @@ export default function ResultPage() {
           </section>
 
           {/* Interactive Environmental Q&A Chat Panel */}
-          <section className="w-full px-gutter-lg pb-space-xl max-w-7xl mx-auto">
-            <div className="w-full rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md">
+          <section className="w-full px-gutter-lg pb-12 max-w-7xl mx-auto">
+            <div className="rf-card p-6 flex flex-col gap-4">
               {/* Panel Header */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-xs border-b-0 pb-space-xs">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-slate-100">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-primary text-[22px]">smart_toy</span>
-                    <h2 className="font-headline-md text-headline-md text-on-surface font-semibold">
+                    <span className="material-symbols-outlined text-teal-700 text-[22px]">smart_toy</span>
+                    <h2 className="text-lg font-bold text-slate-900 tracking-tight">
                       Ask About This Image
                     </h2>
                   </div>
-                  <p className="font-body-md text-body-md text-on-surface-variant">
+                  <p className="text-xs text-slate-600 mt-0.5">
                     Ask questions about the detected waste, object types, handling, or disposal guidance.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-primary"></span>
-                  <span className="font-label-mono-sm text-label-mono-sm text-secondary">
-                    RAG Context: {run.runId} Cached
+                  <span className="w-2 h-2 rounded-full bg-teal-600"></span>
+                  <span className="text-xs font-mono text-slate-500">
+                    RAG Context: {run.runId}
                   </span>
                 </div>
               </div>
 
               {/* Quick Suggested Prompt Pills */}
-              <div className="flex flex-wrap items-center gap-space-xs">
-                <span className="font-label-mono-sm text-label-mono-sm text-secondary mr-1">Suggested Prompts:</span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs text-slate-500 font-medium mr-1">Suggested Prompts:</span>
                 {[
                   'How many waste objects were detected?',
                   'What types were identified?',
@@ -862,7 +928,7 @@ export default function ResultPage() {
                     key={prompt}
                     type="button"
                     onClick={() => handleSendChat(prompt)}
-                    className="px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-body-sm text-body-sm hover:bg-surface-container-high transition-colors text-left cursor-pointer"
+                    className="px-3 py-1 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-medium transition-colors text-left cursor-pointer"
                   >
                     {prompt}
                   </button>
@@ -870,18 +936,18 @@ export default function ResultPage() {
               </div>
 
               {/* Conversation Scroll Container */}
-              <div className="flex flex-col gap-space-md max-h-96 overflow-y-auto p-space-sm rounded-lg bg-surface-container-low">
+              <div className="rf-subcard p-4 flex flex-col gap-4 max-h-96 overflow-y-auto bg-slate-50/60">
                 {chatMessages.map((msg) =>
                   msg.sender === 'user' ? (
                     /* User Message */
                     <div
                       key={msg.id}
-                      className="flex items-start justify-end gap-space-sm ml-auto max-w-[85%] md:max-w-[70%]"
+                      className="flex items-start justify-end gap-2.5 ml-auto max-w-[85%] md:max-w-[70%]"
                     >
-                      <div className="p-space-sm rounded-xl bg-primary text-on-primary font-body-md text-body-md shadow-sm">
+                      <div className="p-3 rounded-xl bg-teal-800 text-white shadow-sm text-sm font-normal">
                         {msg.text}
                       </div>
-                      <div className="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-label-mono-sm text-label-mono-sm font-semibold shrink-0">
+                      <div className="w-7 h-7 rounded-full bg-teal-100 text-teal-900 flex items-center justify-center text-xs font-semibold shrink-0">
                         OP
                       </div>
                     </div>
@@ -889,30 +955,30 @@ export default function ResultPage() {
                     /* Assistant Reply */
                     <div
                       key={msg.id}
-                      className="flex items-start gap-space-sm mr-auto max-w-[95%] md:max-w-[85%]"
+                      className="flex items-start gap-2.5 mr-auto max-w-[95%] md:max-w-[85%]"
                     >
-                      <div className="w-8 h-8 rounded-full bg-surface-container-highest text-primary flex items-center justify-center shrink-0 shadow-sm">
-                        <span className="material-symbols-outlined text-[18px]">psychology</span>
+                      <div className="w-7 h-7 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                        <span className="material-symbols-outlined text-[16px]">psychology</span>
                       </div>
-                      <div className="flex flex-col gap-space-xs p-space-md rounded-xl bg-surface-container-lowest text-on-surface shadow-sm w-full">
-                        <div className="flex items-center justify-between gap-space-sm">
-                          <span className="font-label-mono-sm text-label-mono-sm text-primary font-semibold">
+                      <div className="rf-card p-4 text-slate-800 w-full flex flex-col gap-1.5">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-semibold text-teal-800">
                             Ecological Guidance Engine
                           </span>
-                          <span className="font-label-mono-sm text-label-mono-sm text-secondary">
+                          <span className="text-xs text-slate-400 font-mono">
                             Latency: {msg.latencyMs || 184}ms via Groq
                           </span>
                         </div>
-                        <div className="font-body-md text-body-md text-on-surface leading-relaxed whitespace-pre-line">
+                        <div className="text-sm text-slate-800 leading-relaxed whitespace-pre-line">
                           {msg.text}
                         </div>
-                        <div className="pt-1 flex items-center gap-space-sm text-secondary font-label-mono-sm text-label-mono-sm">
-                          <span>Verified against EPA Inland Waterway Rubric (2024.1)</span>
+                        <div className="pt-2 mt-1 border-t border-slate-100 flex items-center gap-3 text-slate-500 text-xs">
+                          <span>Verified against EPA Inland Waterway Rubric</span>
                           <span>•</span>
                           <button
                             type="button"
                             onClick={() => handleCopyGuidance(msg.id, msg.text)}
-                            className="text-tertiary hover:underline flex items-center gap-1 cursor-pointer"
+                            className="text-teal-700 hover:text-teal-900 font-medium flex items-center gap-1 cursor-pointer"
                           >
                             <span className="material-symbols-outlined text-[14px]">
                               {copiedGuidanceId === msg.id ? 'check' : 'content_copy'}
@@ -926,12 +992,12 @@ export default function ResultPage() {
                 )}
 
                 {chatLoading && (
-                  <div className="flex items-start gap-space-sm mr-auto max-w-[95%] md:max-w-[85%]">
-                    <div className="w-8 h-8 rounded-full bg-surface-container-highest text-primary flex items-center justify-center shrink-0 shadow-sm animate-pulse">
-                      <span className="material-symbols-outlined text-[18px]">psychology</span>
+                  <div className="flex items-start gap-2.5 mr-auto max-w-[95%] md:max-w-[85%]">
+                    <div className="w-7 h-7 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 flex items-center justify-center shrink-0 shadow-sm animate-pulse">
+                      <span className="material-symbols-outlined text-[16px]">psychology</span>
                     </div>
-                    <div className="p-space-md rounded-xl bg-surface-container-lowest text-secondary font-label-mono-sm text-label-mono-sm shadow-sm flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[16px] animate-spin text-primary">sync</span>
+                    <div className="rf-card p-3.5 text-slate-600 text-xs flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[16px] animate-spin text-teal-700">sync</span>
                       <span>Retrieving DuckDB evidence chunks &amp; generating grounded advisory...</span>
                     </div>
                   </div>
@@ -944,28 +1010,23 @@ export default function ResultPage() {
                   e.preventDefault();
                   handleSendChat();
                 }}
-                className="flex items-center gap-space-sm pt-space-xs"
+                className="flex items-center gap-3 pt-1 w-full"
               >
-                <div className="relative flex-1">
-                  <input
-                    type="text"
-                    value={chatInput}
-                    onChange={(e) => setChatInput(e.target.value)}
-                    placeholder="Ask a question grounded in this image detection..."
-                    disabled={chatLoading}
-                    className="w-full px-space-md py-space-sm pr-10 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-colors shadow-inner"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-[20px]">
-                    mic
-                  </span>
-                </div>
+                <input
+                  type="text"
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  placeholder="Ask a question grounded in this image detection..."
+                  disabled={chatLoading}
+                  className="flex-1 h-11 px-4 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm placeholder:text-slate-400 focus:outline-none focus:border-teal-700 focus:ring-1 focus:ring-teal-700 shadow-sm transition-colors"
+                />
                 <button
                   type="submit"
                   disabled={chatLoading || !chatInput.trim()}
-                  className="px-space-lg py-space-sm rounded-lg bg-primary text-on-primary font-body-md text-body-md font-semibold hover:bg-primary-container transition-colors flex items-center gap-1.5 shadow-sm active:scale-95 shrink-0 disabled:opacity-50 cursor-pointer"
+                  className="h-11 px-5 rounded-lg bg-teal-800 hover:bg-teal-900 active:bg-teal-950 text-white font-medium text-sm inline-flex items-center justify-center gap-2 shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shrink-0"
                 >
                   <span>Send</span>
-                  <span className="material-symbols-outlined text-[18px]">send</span>
+                  <span className="material-symbols-outlined text-[16px] leading-none">send</span>
                 </button>
               </form>
             </div>

@@ -47,8 +47,8 @@ export function HistoryList() {
 
   if (runs.length === 0) {
     return (
-      <div className="border border-dashed border-zinc-300 rounded-card p-12 text-center max-w-lg mx-auto my-8 space-y-4 bg-slate-50/50">
-        <div className="w-12 h-12 rounded-full bg-white border border-zinc-200 flex items-center justify-center mx-auto text-slate-400">
+      <div className="border border-dashed border-slate-300 rounded-xl p-12 text-center max-w-lg mx-auto my-8 space-y-4 bg-white rf-card">
+        <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mx-auto text-slate-400">
           <Clock className="w-6 h-6" />
         </div>
         <div className="space-y-1">
@@ -60,7 +60,7 @@ export function HistoryList() {
         <div>
           <Link
             href="/analyze"
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-800 text-white text-xs font-semibold rounded-control hover:bg-teal-900 transition-colors shadow-2xs"
+            className="rf-btn-primary text-xs py-2"
           >
             <span>Analyze a photograph</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -72,13 +72,13 @@ export function HistoryList() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-200">
         <p className="text-xs text-slate-600">
           <strong className="font-semibold text-slate-900">{runs.length}</strong> {runs.length === 1 ? 'analysis' : 'analyses'} saved in this browser.
         </p>
         <button
           onClick={handleClearHistory}
-          className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-red-700 transition-colors"
+          className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-red-700 transition-colors cursor-pointer"
         >
           <Trash2 className="w-3.5 h-3.5" />
           <span>Clear history</span>
@@ -102,7 +102,7 @@ export function HistoryList() {
             <Link
               key={run.runId}
               href={`/result/${run.runId}`}
-              className="group border border-zinc-200 hover:border-teal-700/60 rounded-card overflow-hidden bg-white transition hover:shadow-xs flex flex-col justify-between"
+              className="group rf-card hover:border-teal-700/60 overflow-hidden transition hover:shadow-md flex flex-col justify-between"
             >
               <div>
                 <div className="aspect-[4/3] bg-slate-100 relative overflow-hidden">
@@ -114,7 +114,7 @@ export function HistoryList() {
                         : run.imageUrl
                     }
                     alt={run.title || 'Waterway analysis'}
-                    className="w-full h-full object-cover group-hover:scale-102 transition duration-200"
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   />
                   <span className="absolute bottom-2 right-2 px-2 py-0.5 text-[11px] font-mono font-medium rounded bg-black/75 text-white backdrop-blur-xs">
                     {countAtDefault} visible (&ge;0.25)
@@ -128,7 +128,7 @@ export function HistoryList() {
                 </div>
               </div>
 
-              <div className="px-4 pb-3 pt-2 border-t border-zinc-100 flex items-center justify-between text-xs text-slate-600 font-medium">
+              <div className="px-4 pb-3 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600 font-medium">
                 <span className="text-[11px] text-slate-500 font-mono">
                   {run.detections.length} candidate boxes
                 </span>

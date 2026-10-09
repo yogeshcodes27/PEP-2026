@@ -7,10 +7,55 @@
     margin: 0;
     padding: 0;
     background-color: #f8f9ff;
-    color: #0b1c30;
+    color: #0f172a;
   }
   body {
     overscroll-behavior: none;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+@layer components {
+  /* Major Card Surface: 1px border and very soft elevation shadow ("paper/card on light background") */
+  .rf-card {
+    background-color: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
+  }
+
+  /* Secondary Sub-Card / Inner container */
+  .rf-subcard {
+    background-color: #f8fafc;
+    border: 1px solid rgba(226, 232, 240, 0.75);
+  }
+
+  /* Clean restrained button styling */
+  .rf-btn-primary {
+    background-color: #00685f;
+    color: #ffffff;
+    font-weight: 500;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 1px 2px 0 rgba(0, 104, 95, 0.15);
+  }
+  .rf-btn-primary:hover {
+    background-color: #00564e;
+  }
+  .rf-btn-primary:active {
+    background-color: #004740;
+  }
+
+  .rf-btn-secondary {
+    background-color: #ffffff;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    font-weight: 500;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+  }
+  .rf-btn-secondary:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
   }
 }
 

@@ -5,6 +5,13 @@ export type BoundingBox = {
   y2: number; // normalized 0..1 (bottom)
 };
 
+export type PixelBoundingBox = {
+  x1: number; // source image pixels (left)
+  y1: number; // source image pixels (top)
+  x2: number; // source image pixels (right)
+  y2: number; // source image pixels (bottom)
+};
+
 export type MaterialEstimateLabel =
   | 'plastic bottle'
   | 'plastic bag'
@@ -34,6 +41,8 @@ export type Detection = {
   id: string;
 
   bbox: BoundingBox;
+
+  pixel_bbox?: PixelBoundingBox;
 
   confidence: number; // 0..1
 

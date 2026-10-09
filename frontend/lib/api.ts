@@ -139,6 +139,14 @@ class HttpApiAdapter implements ApiAdapter {
           x2: typeof bbox.x2 === 'number' ? bbox.x2 : 0,
           y2: typeof bbox.y2 === 'number' ? bbox.y2 : 0,
         },
+        pixel_bbox: d.pixel_bbox
+          ? {
+              x1: typeof d.pixel_bbox.x1 === 'number' ? d.pixel_bbox.x1 : 0,
+              y1: typeof d.pixel_bbox.y1 === 'number' ? d.pixel_bbox.y1 : 0,
+              x2: typeof d.pixel_bbox.x2 === 'number' ? d.pixel_bbox.x2 : 0,
+              y2: typeof d.pixel_bbox.y2 === 'number' ? d.pixel_bbox.y2 : 0,
+            }
+          : undefined,
         confidence: typeof d.confidence === 'number' ? d.confidence : 0.5,
         typeEstimate,
         type_prediction: d.type_prediction,
@@ -208,6 +216,14 @@ class HttpApiAdapter implements ApiAdapter {
           detections: (data.detections || []).map((d: any, index: number) => ({
             id: `det-${data.run_id}-${d.detection_id || index + 1}`,
             bbox: d.bbox || { x1: 0, y1: 0, x2: 0, y2: 0 },
+            pixel_bbox: d.pixel_bbox
+              ? {
+                  x1: typeof d.pixel_bbox.x1 === 'number' ? d.pixel_bbox.x1 : 0,
+                  y1: typeof d.pixel_bbox.y1 === 'number' ? d.pixel_bbox.y1 : 0,
+                  x2: typeof d.pixel_bbox.x2 === 'number' ? d.pixel_bbox.x2 : 0,
+                  y2: typeof d.pixel_bbox.y2 === 'number' ? d.pixel_bbox.y2 : 0,
+                }
+              : undefined,
             confidence: d.confidence || 0.5,
             typeEstimate: d.type_prediction
               ? { label: d.type_prediction.class_name }

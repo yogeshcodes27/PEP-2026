@@ -280,7 +280,7 @@ export const DetectionCanvas: React.FC<DetectionCanvasProps> = ({
           <img
             src={displayImageUrl}
             alt="Waterway photograph evaluated for floating waste"
-            className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            className="absolute inset-0 w-full h-full object-contain select-none pointer-events-none"
             draggable={false}
           />
 
