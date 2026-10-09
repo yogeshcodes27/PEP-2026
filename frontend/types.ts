@@ -69,6 +69,7 @@ export type ImageCheckStatus =
 export type Run = {
   runId: string;
   imageUrl: string;
+  image_url?: string;
   imageWidth: number;
   imageHeight: number;
   modelVersion: string;

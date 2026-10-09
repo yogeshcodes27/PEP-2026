@@ -108,7 +108,11 @@ export function HistoryList() {
                 <div className="aspect-[4/3] bg-slate-100 relative overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={run.imageUrl}
+                    src={
+                      run.imageUrl?.startsWith('/api/')
+                        ? `${(process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000').replace(/\/+$/, '')}${run.imageUrl}`
+                        : run.imageUrl
+                    }
                     alt={run.title || 'Waterway analysis'}
                     className="w-full h-full object-cover group-hover:scale-102 transition duration-200"
                   />

@@ -141,13 +141,17 @@ class HttpApiAdapter implements ApiAdapter {
         },
         confidence: typeof d.confidence === 'number' ? d.confidence : 0.5,
         typeEstimate,
+        type_prediction: d.type_prediction,
       };
     });
+
+    const returnedImageUrl = data.image_url || `/api/runs/${runId}/image`;
 
     const run: Run = {
       runId,
       title: file.name.replace(/\.[^/.]+$/, ''),
-      imageUrl: dataUrl,
+      imageUrl: returnedImageUrl,
+      image_url: returnedImageUrl,
       imageWidth: data.image_size?.width || dimensions.width,
       imageHeight: data.image_size?.height || dimensions.height,
       modelVersion: data.model || 'YOLO26s-P2-Unified',
@@ -189,10 +193,12 @@ class HttpApiAdapter implements ApiAdapter {
       });
       if (res.ok) {
         const data = await res.json();
+        const returnedImageUrl = data.image_url || `/api/runs/${data.run_id}/image`;
         const run: Run = {
           runId: data.run_id,
           title: data.filename?.replace(/\.[^/.]+$/, '') || 'Waterway analysis',
-          imageUrl: '/images/sample-canal.jpg',
+          imageUrl: returnedImageUrl,
+          image_url: returnedImageUrl,
           imageWidth: data.image_size?.width || 1280,
           imageHeight: data.image_size?.height || 720,
           modelVersion: data.model || 'YOLO26s-P2-Unified',
@@ -206,6 +212,7 @@ class HttpApiAdapter implements ApiAdapter {
             typeEstimate: d.type_prediction
               ? { label: d.type_prediction.class_name }
               : undefined,
+            type_prediction: d.type_prediction,
           })),
         };
         this.saveUserRun(run);

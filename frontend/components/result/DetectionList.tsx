@@ -19,11 +19,16 @@ export const DetectionList: React.FC<DetectionListProps> = ({
   onSelectDetection,
   onSendFeedback,
   onTriggerDrawMissed,
-  enableTypeEstimate = process.env.NEXT_PUBLIC_ENABLE_TYPE_ESTIMATE === 'true',
+  enableTypeEstimate = true,
 }) => {
-  const [feedbackGiven, setFeedbackGiven] = useState<Record<string, 'correct' | 'not_waste'>>({});
+  const [feedbackGiven, setFeedbackGiven] = useState<
+    Record<string, 'correct' | 'not_waste'>
+  >({});
 
-  const handleFeedback = (detectionId: string, type: 'correct' | 'not_waste') => {
+  const handleFeedback = (
+    detectionId: string,
+    type: 'correct' | 'not_waste'
+  ) => {
     setFeedbackGiven((prev) => ({ ...prev, [detectionId]: type }));
     onSendFeedback(detectionId, type);
   };
@@ -34,12 +39,15 @@ export const DetectionList: React.FC<DetectionListProps> = ({
         <div className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200/80 flex items-center justify-center mx-auto text-slate-500">
           <AlertCircle className="w-4 h-4" />
         </div>
+
         <div className="space-y-1">
           <p className="text-sm font-bold text-slate-900">
             No visible floating-waste detections at this threshold
           </p>
+
           <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
-            No bounding candidates meet the current confidence cutoff. Try lowering the confidence slider or inspecting the image directly.
+            No bounding candidates meet the current confidence cutoff. Try
+            lowering the confidence slider or inspecting the image directly.
           </p>
         </div>
 
@@ -63,10 +71,12 @@ export const DetectionList: React.FC<DetectionListProps> = ({
             <h3 className="text-sm font-bold text-slate-900 leading-tight">
               Visible detections
             </h3>
+
             <span className="font-mono text-xs font-bold px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-200/60">
               {detections.length}
             </span>
           </div>
+
           <span className="text-xs text-slate-500 mt-0.5 block">
             Select a row to highlight its position in the image
           </span>
@@ -83,10 +93,11 @@ export const DetectionList: React.FC<DetectionListProps> = ({
         </button>
       </div>
 
-      {/* Detections List: Compact Rows */}
+      {/* Detections List */}
       <div className="space-y-2 max-h-[380px] overflow-y-auto pr-1">
         {detections.map((det, index) => {
           const isSelected = selectedDetectionId === det.id;
+
           const boxAreaPct = (
             (det.bbox.x2 - det.bbox.x1) *
             (det.bbox.y2 - det.bbox.y1) *
@@ -98,7 +109,9 @@ export const DetectionList: React.FC<DetectionListProps> = ({
           return (
             <div
               key={det.id}
-              onClick={() => onSelectDetection(isSelected ? null : det.id)}
+              onClick={() =>
+                onSelectDetection(isSelected ? null : det.id)
+              }
               onMouseEnter={() => onSelectDetection(det.id)}
               className={`p-2.5 sm:p-3 rounded-lg border transition-all cursor-pointer ${
                 isSelected
@@ -113,21 +126,27 @@ export const DetectionList: React.FC<DetectionListProps> = ({
                     <span className="font-mono font-bold text-xs text-slate-800">
                       #{index + 1}
                     </span>
+
                     <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-slate-100 border border-slate-200/80 text-slate-900">
                       {det.confidence.toFixed(2)}
                     </span>
+
                     <span className="text-[11px] text-slate-400 font-mono">
                       {boxAreaPct}% of frame
                     </span>
                   </div>
 
-                  {/* Classifier information if present */}
+                  {/* Actual runtime classifier prediction */}
                   {enableTypeEstimate && det.typeEstimate && (
                     <div className="text-[11px] text-slate-600 flex items-center gap-1.5 pt-0.5">
-                      <span className="font-medium text-slate-700">Classification:</span>
+                      <span className="font-medium text-slate-700">
+                        Classified as:
+                      </span>
+
                       <span className="font-mono text-slate-900 font-semibold bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200/60">
                         {det.typeEstimate.label}
                       </span>
+
                       {det.typeEstimate.note && (
                         <span className="text-slate-400 text-[10px] hidden sm:inline">
                           &bull; {det.typeEstimate.note}
@@ -144,21 +163,28 @@ export const DetectionList: React.FC<DetectionListProps> = ({
                 >
                   {feedbackStatus ? (
                     <span className="text-[11px] font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-                      {feedbackStatus === 'correct' ? 'Confirmed waste' : 'Flagged false positive'}
+                      {feedbackStatus === 'correct'
+                        ? 'Confirmed waste'
+                        : 'Flagged false positive'}
                     </span>
                   ) : (
                     <>
                       <button
                         type="button"
-                        onClick={() => handleFeedback(det.id, 'correct')}
+                        onClick={() =>
+                          handleFeedback(det.id, 'correct')
+                        }
                         className="px-2 py-1 rounded-md text-[11px] font-medium border border-slate-200 bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                         title="Confirm this detection is floating waste"
                       >
                         Confirm waste
                       </button>
+
                       <button
                         type="button"
-                        onClick={() => handleFeedback(det.id, 'not_waste')}
+                        onClick={() =>
+                          handleFeedback(det.id, 'not_waste')
+                        }
                         className="px-2 py-1 rounded-md text-[11px] font-medium border border-slate-200 bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                         title="Mark this detection as false positive (not waste)"
                       >

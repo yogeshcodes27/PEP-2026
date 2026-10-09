@@ -4,7 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'RobustFloat — Cross-Domain Floating-Waste Detection in Inland Waters',
   description:
-    'Upload waterway imagery to inspect visible floating waste with evidence-grounded computer vision predictions evaluated across heterogeneous inland-water domains.',
+    'Detect floating waste in inland waters using a unified deep-learning model with object-type context and evidence-based analysis.',
   keywords: [
     'RobustFloat',
     'floating waste detection',
@@ -21,16 +21,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="light">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-white text-ink-primary antialiased min-h-screen">
+      <body className="bg-surface font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed">
         {children}
       </body>
     </html>

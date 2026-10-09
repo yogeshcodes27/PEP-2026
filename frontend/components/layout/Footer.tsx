@@ -1,48 +1,58 @@
 import React from 'react';
 import Link from 'next/link';
-import { Droplets } from 'lucide-react';
 
-export const Footer = () => {
+export const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-50 border-t border-zinc-200 py-10 mt-auto text-xs text-slate-600">
-      <div className="max-w-content mx-auto px-4 sm:px-6 space-y-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6 border-b border-zinc-200">
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-control bg-teal-800 text-white flex items-center justify-center">
-              <Droplets className="w-3.5 h-3.5 text-teal-200" />
+    <footer className="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.02)] mt-margin-lg border-t border-outline-variant/20">
+      <div className="w-full px-gutter-lg py-space-xl max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg pb-space-lg">
+          <div className="flex flex-col gap-space-xs">
+            <div className="flex items-center gap-space-sm">
+              <span className="font-headline-sm text-headline-sm text-on-surface font-semibold">
+                RobustFloat
+              </span>
+              <span className="font-body-sm text-body-sm text-secondary">
+                — Cross-Domain Floating-Waste Detection in Inland Waters
+              </span>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-slate-900">RobustFloat</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-200 text-slate-700">Research Release</span>
-              </div>
-              <p className="text-xs text-slate-500">
-                Cross-domain floating-waste detection for heterogeneous inland waters.
-              </p>
-            </div>
+            <p className="font-label-mono-sm text-label-mono-sm text-on-surface-variant">
+              Research Prototype • Next.js + FastAPI + YOLO26s-P2
+            </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 font-medium text-slate-600">
-            <Link href="/analyze" className="hover:text-teal-800 transition-colors">
-              Analyze Image
+          <div className="flex flex-wrap items-center gap-space-md">
+            <Link
+              href="/system"
+              className="font-label-mono-sm text-label-mono-sm text-tertiary hover:text-on-tertiary-fixed-variant transition-colors flex items-center gap-space-xs"
+            >
+              <span className="material-symbols-outlined text-[16px]">description</span>
+              arXiv:2502.xPaper
             </Link>
-            <Link href="/history" className="hover:text-teal-800 transition-colors">
-              Session History
+            <Link
+              href="/system"
+              className="font-label-mono-sm text-label-mono-sm text-tertiary hover:text-on-tertiary-fixed-variant transition-colors flex items-center gap-space-xs"
+            >
+              <span className="material-symbols-outlined text-[16px]">terminal</span>
+              Code &amp; Model Weights
             </Link>
-            <Link href="/about" className="hover:text-teal-800 transition-colors">
-              Methodology & Benchmarks
+            <Link
+              href="/system"
+              className="font-label-mono-sm text-label-mono-sm text-tertiary hover:text-on-tertiary-fixed-variant transition-colors flex items-center gap-space-xs"
+            >
+              <span className="material-symbols-outlined text-[16px]">dataset</span>
+              HydroWaste-10k Benchmark
             </Link>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] text-slate-500">
-          <p className="max-w-xl">
-            Evaluated on TUD-GV and IWHR test datasets. Detections are image-based predictions at a selected confidence threshold. This tool does not measure chemical water quality, pathogens, or drinking-water safety.
+        <div className="pt-space-md border-t border-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+          <p className="font-body-sm text-body-sm text-outline">
+            Ecological Computer Vision &amp; Autonomous Aquatic Telemetry Laboratory © 2025. Released under Open Research License.
           </p>
-          <div className="flex items-center gap-4 text-slate-500">
-            <span>Client-side local analysis</span>
-            <span>&bull;</span>
-            <Link href="/about" className="hover:underline">Research limits</Link>
+          <div className="flex items-center gap-space-md">
+            <span className="font-label-mono-sm text-label-mono-sm text-secondary">Edge FPS: 58.4</span>
+            <span className="font-label-mono-sm text-label-mono-sm text-secondary">Precision: mAP@50 91.2%</span>
+            <span className="font-label-mono-sm text-label-mono-sm text-primary font-medium">Cuda v12.4 Active</span>
           </div>
         </div>
       </div>

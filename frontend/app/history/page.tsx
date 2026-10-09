@@ -5,18 +5,18 @@ import { HistoryList } from '@/components/history/HistoryList';
 
 export default function HistoryPage() {
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans">
+    <div className="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-1 max-w-content w-full mx-auto px-4 sm:px-6 py-10 space-y-6">
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-teal-50 text-teal-800 border border-teal-200">
+      <main className="w-full pt-20 pb-12 flex-1 max-w-7xl mx-auto px-gutter-lg space-y-space-md">
+        <div className="flex flex-col gap-space-xs">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-medium bg-surface-container-high text-on-secondary-container self-start">
             <span>Local Browser Sessions</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">
             Analysis Session History
           </h1>
-          <p className="text-sm text-slate-600">
+          <p className="font-body-md text-body-md text-secondary">
             Photographs uploaded and evaluated in this browser. Click any scan to reopen its detection workspace and adjust thresholds.
           </p>
         </div>

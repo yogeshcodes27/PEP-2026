@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import Image from 'next/image';
 import { Detection, BoundingBox } from '@/types';
 import { Eye, EyeOff } from 'lucide-react';
 
@@ -33,6 +32,14 @@ export const DetectionCanvas: React.FC<DetectionCanvasProps> = ({
   onCompleteDrawnBox,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const apiBase = (
+    process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'
+  ).replace(/\/+$/, '');
+
+  const displayImageUrl = imageUrl?.startsWith('/api/')
+    ? `${apiBase}${imageUrl}`
+    : imageUrl;
 
   const [drawingStart, setDrawingStart] = useState<{
     x: number;
@@ -269,13 +276,12 @@ export const DetectionCanvas: React.FC<DetectionCanvasProps> = ({
               ORIGINAL IMAGE
           ================================================== */}
 
-          <Image
-            src={imageUrl}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={displayImageUrl}
             alt="Waterway photograph evaluated for floating waste"
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 65vw"
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            draggable={false}
           />
 
 
